@@ -6,31 +6,12 @@
     <title>养老服务消费补贴申领演示</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <main class="phone-page user-page">
-      <div class="top-strip" aria-hidden="true"></div>
-      <section class="hero">
-        <h1 class="hero-title user-title-main">2026 年大连市<br />中度以上失能老年人</h1>
-        <p class="hero-title user-title-sub">养老服务消费补贴申领演示</p>
-      </section>
-      <section class="content user-content">
-        <p class="guide"><strong>领取补贴详细步骤</strong><span> 详见视频</span></p>
-        <div class="video-card">
-          <video
-            controls
-            playsinline
-            webkit-playsinline
-            x5-playsinline
-            x5-video-player-type="h5-page"
-            x5-video-player-fullscreen="true"
-            x5-video-orientation="landscape"
-            preload="metadata"
-            poster="./assets/video-poster-clean.jpg"
-            src="./assets/user-guide-demo.mp4"
-          ></video>
-        </div>
-      </section>
-      <div class="bottom-bg" aria-hidden="true"></div>
-    </main>
+  <body data-page="user">
+    <div id="app" v-cloak></div>
+    <script src="./vendor/vue/vue.min.js"></script>
+    <script src="./src/config/pages.js"></script>
+    <script src="./src/components/video-card.js"></script>
+    <script src="./src/components/h5-page.js"></script>
+    <script src="./src/main.js"></script>
   </body>
 </html>

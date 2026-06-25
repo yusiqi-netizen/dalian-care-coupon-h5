@@ -1,9 +1,18 @@
 # 大连市养老服务消费补贴 H5
 
-静态 H5 预览项目，包含：
+Vue 2.0 H5 预览项目，包含：
 
 - `user.html`：用户端指引视频页
 - `org.html`：机构端指引视频页
+
+## 代码结构
+
+- `user.html` / `org.html`：页面入口，保留原有访问地址，内部由 Vue 2 挂载渲染
+- `src/config/pages.js`：用户端、机构端页面文案、视频列表、视频资源配置
+- `src/components/h5-page.js`：H5 页面公共结构
+- `src/components/video-card.js`：视频播放器组件，保留微信 WebView 兼容属性
+- `src/main.js`：根据入口页的 `data-page` 加载对应页面配置
+- `vendor/vue/vue.min.js`：本地 Vue 2.7.16 运行文件，避免手机预览依赖外部 CDN
 
 ## 部署
 

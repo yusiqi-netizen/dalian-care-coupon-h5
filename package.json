@@ -1,0 +1,12 @@
+{
+  "name": "dalian-care-coupon-h5",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vue 2 H5 pages for Dalian care coupon video guide.",
+  "scripts": {
+    "preview": "python3 -m http.server 4173"
+  },
+  "dependencies": {
+    "vue": "2.7.16"
+  }
+}

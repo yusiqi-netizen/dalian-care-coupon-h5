@@ -6,52 +6,12 @@
     <title>养老服务消费补贴信息系统操作演示-机构端</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
-    <main class="phone-page org-page">
-      <div class="top-strip" aria-hidden="true"></div>
-      <section class="hero">
-        <h1 class="hero-title org-title">
-          2026 年大连市中度以上失能老年人<br />
-          养老服务消费补贴信息系统操作演示<br />
-          （机构端）
-        </h1>
-      </section>
-      <section class="content org-content">
-        <p class="guide"><strong>领取补贴详细步骤</strong><span> 详见视频</span></p>
-        <div class="video-list">
-          <section class="video-section">
-            <h2 class="video-title">1. 项目介绍系统登录</h2>
-            <div class="video-card">
-              <video controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" x5-video-player-fullscreen="true" x5-video-orientation="landscape" preload="metadata" poster="./assets/video-poster-clean.jpg" src="./assets/user-guide-demo.mp4"></video>
-            </div>
-          </section>
-          <section class="video-section">
-            <h2 class="video-title">2. 机构管理</h2>
-            <div class="video-card">
-              <video controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" x5-video-player-fullscreen="true" x5-video-orientation="landscape" preload="metadata" poster="./assets/video-poster-clean.jpg" src="./assets/user-guide-demo.mp4"></video>
-            </div>
-          </section>
-          <section class="video-section">
-            <h2 class="video-title">3. 老年人能力评估及上门服务</h2>
-            <div class="video-card">
-              <video controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" x5-video-player-fullscreen="true" x5-video-orientation="landscape" preload="metadata" poster="./assets/video-poster-clean.jpg" src="./assets/user-guide-demo.mp4"></video>
-            </div>
-          </section>
-          <section class="video-section">
-            <h2 class="video-title">4. 机构服务</h2>
-            <div class="video-card">
-              <video controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" x5-video-player-fullscreen="true" x5-video-orientation="landscape" preload="metadata" poster="./assets/video-poster-clean.jpg" src="./assets/user-guide-demo.mp4"></video>
-            </div>
-          </section>
-          <section class="video-section">
-            <h2 class="video-title">5. 垫付资金报销管理</h2>
-            <div class="video-card">
-              <video controls playsinline webkit-playsinline x5-playsinline x5-video-player-type="h5-page" x5-video-player-fullscreen="true" x5-video-orientation="landscape" preload="metadata" poster="./assets/video-poster-clean.jpg" src="./assets/user-guide-demo.mp4"></video>
-            </div>
-          </section>
-        </div>
-      </section>
-      <div class="bottom-bg" aria-hidden="true"></div>
-    </main>
+  <body data-page="org">
+    <div id="app" v-cloak></div>
+    <script src="./vendor/vue/vue.min.js"></script>
+    <script src="./src/config/pages.js"></script>
+    <script src="./src/components/video-card.js"></script>
+    <script src="./src/components/h5-page.js"></script>
+    <script src="./src/main.js"></script>
   </body>
 </html>
