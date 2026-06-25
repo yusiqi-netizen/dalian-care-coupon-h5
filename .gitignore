@@ -1,0 +1,5 @@
+.DS_Store
+
+# GitHub has a 100MB per-file limit. Keep the original production video local
+# until it is compressed or moved to external object storage/CDN.
+assets/user-guide.mp4
