@@ -164,70 +164,15 @@ a {
   background: #10233b;
 }
 
-.video-card video,
-.video-poster {
+.video-card video {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
 }
 
-.video-poster {
-  background-image: linear-gradient(rgba(0, 0, 0, .51), rgba(0, 0, 0, .51)), url("./assets/video-thumb.png");
-  background-position: center;
-  background-size: cover;
-}
-
 .video-card video[poster] {
   background: #10233b;
-}
-
-.play-mark {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 178px;
-  height: 51px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: opacity .2s ease;
-}
-
-.video-card.is-playing .play-mark {
-  opacity: 0;
-}
-
-.play-mark::before,
-.play-mark::after {
-  content: "";
-  position: absolute;
-  top: 15px;
-  width: 24px;
-  height: 24px;
-  border: 2px solid rgba(255, 255, 255, .86);
-}
-
-.play-mark::before {
-  left: 0;
-  border-radius: 2px 0 0 2px;
-  border-right: 0;
-}
-
-.play-mark::after {
-  right: 0;
-  border-radius: 0 2px 2px 0;
-  border-left: 0;
-}
-
-.play-triangle {
-  position: absolute;
-  left: 73px;
-  top: 0;
-  width: 0;
-  height: 0;
-  border-top: 25.5px solid transparent;
-  border-bottom: 25.5px solid transparent;
-  border-left: 44px solid #fff;
 }
 
 .video-list {
