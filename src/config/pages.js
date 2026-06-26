@@ -2,13 +2,18 @@ window.H5_PAGE_CONFIG = {
   assets: {
     videoSrc: "./assets/user-guide-demo.mp4",
     posterSrc: "./assets/video-poster-clean.jpg",
+    qrSrc: "./assets/group-qr-card.png",
   },
   user: {
     type: "user",
     title: "养老服务消费补贴申领演示",
     hero: {
-      main: "2026 年大连市<br>中度以上失能老年人",
+      main: "2026年大连市中度以上失能老年人",
       sub: "养老服务消费补贴申领演示",
+    },
+    qr: {
+      title: "扫码加入补贴申领-官方政策答疑群",
+      alt: "补贴申领官方政策答疑群二维码",
     },
     videos: [
       {
@@ -20,7 +25,11 @@ window.H5_PAGE_CONFIG = {
     type: "org",
     title: "养老服务消费补贴信息系统操作演示-机构端",
     hero: {
-      main: "2026 年大连市中度以上失能老年人<br>养老服务消费补贴信息系统操作演示<br>（机构端）",
+      main: "2026年大连市中度以上失能老年人<br>养老服务消费补贴信息系统操作演示<br>（机构端）",
+    },
+    qr: {
+      title: "扫码加入机构侧操作-官方答疑群",
+      alt: "机构侧操作官方答疑群二维码",
     },
     videos: [
       {

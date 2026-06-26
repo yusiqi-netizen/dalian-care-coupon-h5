@@ -28,9 +28,17 @@ a {
 .phone-page {
   width: min(100vw, 440px);
   min-height: 100vh;
-  background: #fff;
+  background: #f2f6fd;
   position: relative;
   overflow: hidden;
+}
+
+.user-page {
+  min-height: 956px;
+}
+
+.org-page {
+  min-height: 2241px;
 }
 
 .top-strip {
@@ -59,11 +67,12 @@ a {
 }
 
 .user-title-main {
-  left: 24px;
+  left: 21px;
   top: 51px;
-  width: 280px;
-  font-size: 28px;
+  width: 398px;
+  font-size: 27px;
   line-height: 38px;
+  white-space: nowrap;
   background: linear-gradient(90deg, #0081db 0%, #0c439b 78%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -71,9 +80,9 @@ a {
 }
 
 .user-title-sub {
-  left: 24px;
-  top: 134px;
-  width: 288px;
+  left: 63px;
+  top: 112px;
+  width: 314px;
   font-size: 24px;
   line-height: 34px;
   white-space: nowrap;
@@ -81,7 +90,7 @@ a {
 
 .org-title {
   left: 22px;
-  top: 91px;
+  top: 54px;
   width: calc(100% - 44px);
   font-size: 24px;
   line-height: 34px;
@@ -92,7 +101,7 @@ a {
 .content {
   position: relative;
   z-index: 1;
-  background: #f2f6fd;
+  background: linear-gradient(180deg, #f2f6fd 0%, #f2f6fd 78%, rgba(242, 246, 253, .56) 100%);
   padding: 0 14px;
 }
 
@@ -108,12 +117,12 @@ a {
 }
 
 .user-content {
-  min-height: 449px;
+  height: 736px;
   padding-top: 50px;
 }
 
 .org-content {
-  height: 1348px;
+  height: 2021px;
   padding-top: 57px;
 }
 
@@ -125,17 +134,19 @@ a {
 .guide {
   position: absolute;
   z-index: 1;
-  top: -5px;
-  left: 53px;
+  top: -18px;
+  left: 0;
+  right: 0;
   margin: 0;
   font-size: 22px;
   line-height: 38px;
   font-weight: 500;
+  text-align: center;
   white-space: nowrap;
 }
 
 .org-page .guide {
-  top: 0;
+  top: -18px;
 }
 
 .guide strong {
@@ -150,13 +161,13 @@ a {
 }
 
 .guide::after {
-  content: "⬇︎⬇︎⬇︎";
-  display: inline-block;
-  margin-left: 8px;
-  color: #1686ff;
-  font-size: 22px;
-  line-height: 1;
-  vertical-align: 1px;
+  content: "↓↓↓";
+  display: block;
+  margin-top: 4px;
+  color: #5d42f2;
+  font-size: 25px;
+  line-height: 28px;
+  font-weight: 700;
 }
 
 .video-card {
@@ -200,8 +211,46 @@ a {
   white-space: nowrap;
 }
 
-.bottom-bg {
+.qr-section {
   position: relative;
+  z-index: 1;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.org-page .qr-section {
+  margin-top: 47px;
+}
+
+.qr-title {
+  margin: 0;
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 600;
+  color: #111;
+  white-space: nowrap;
+}
+
+.qr-arrows {
+  margin-top: 8px;
+  color: #6a3df0;
+  font-size: 25px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.qr-card {
+  display: block;
+  width: 284px;
+  height: 284px;
+  margin: 12px auto 0;
+}
+
+.bottom-bg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 0;
   height: 287px;
   background-image: url("./assets/bottom-bg.png");
@@ -247,17 +296,27 @@ a {
   }
 
   .guide {
-    left: 12%;
     font-size: clamp(18px, 5vw, 22px);
   }
 
   .user-title-main {
-    font-size: clamp(24px, 6.4vw, 28px);
+    left: 5%;
+    width: 90%;
+    font-size: clamp(21px, 6.15vw, 27px);
   }
 
-  .user-title-sub,
+  .user-title-sub {
+    left: 14%;
+    width: 72%;
+    font-size: clamp(20px, 5.45vw, 24px);
+  }
+
   .org-title {
     font-size: clamp(20px, 5.45vw, 24px);
+  }
+
+  .qr-title {
+    font-size: clamp(19px, 5.45vw, 24px);
   }
 
   .video-card {
