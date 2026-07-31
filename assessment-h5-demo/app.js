@@ -82,6 +82,8 @@ const formHotspots = document.querySelector("#formHotspots");
 const formFeedback = document.querySelector("#formFeedback");
 const speechHotspot = document.querySelector("#speechHotspot");
 const liveTime = document.querySelector("#liveTime");
+const dynamicTestPanel = document.querySelector("#dynamicTestPanel");
+const dynamicComplete = document.querySelector("#dynamicComplete");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
@@ -99,7 +101,7 @@ function clearFlowTimers() {
   liveTimer = null;
   flowStatus.classList.remove("show");
   flowStatus.textContent = "";
-  liveTime.hidden = true;
+  dynamicTestPanel.hidden = true;
 }
 function stopAudio() { narration.pause(); narration.currentTime = 0; }
 function showFlowStatus(message, duration = 1800) {
@@ -125,8 +127,8 @@ function playCountdown() {
 }
 function startLiveTimer(mode) {
   if (!mode) return;
-  liveTime.hidden = false;
-  liveTime.style.setProperty("--timer-y", "248px");
+  dynamicTestPanel.hidden = false;
+  dynamicTestPanel.classList.remove("countdown");
   const startedAt = Date.now();
   const duration = mode === "down30" ? 30 : mode === "down10" ? 10 : mode === "down120" ? 120 : null;
   const update = () => {
@@ -173,13 +175,12 @@ function renderScreen() {
   image.src = assetPath("screens", screen.image);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {
-    liveTime.classList.add("countdown");
-    liveTime.hidden = false;
-    liveTime.style.setProperty("--timer-y", "379px");
+    dynamicTestPanel.hidden = false;
+    dynamicTestPanel.classList.add("countdown");
     liveTime.textContent = "5";
     playCountdown();
   } else {
-    liveTime.classList.remove("countdown");
+    dynamicTestPanel.classList.remove("countdown");
     scheduleScreenAudio(screen);
     startLiveTimer(screen.timer);
   }
@@ -271,6 +272,7 @@ document.querySelector("#startButton").addEventListener("click", () => { welcome
 document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
 primaryActionHotspot.addEventListener("click", next);
+dynamicComplete.addEventListener("click", () => next(true));
 stage.addEventListener("click", event => {
   if (event.target !== image || !primaryActionScreens.has(index)) return;
   const bounds = stage.getBoundingClientRect();
