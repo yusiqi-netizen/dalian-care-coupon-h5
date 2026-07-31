@@ -13,6 +13,23 @@
       <img class="screen-image" id="screenImage" alt="老年人体适能测评页面">
       <button class="tap-zone tap-back" id="backButton" aria-label="返回上一页"></button>
       <button class="tap-zone tap-next" id="nextButton" aria-label="继续下一步"></button>
+      <nav class="test-tabs" id="testTabs" aria-label="八项测试快速切换" hidden></nav>
+      <div class="form-hotspots" id="formHotspots" hidden>
+        <button data-form="gender" data-value="男" style="--x:5%;--y:16.6%;--w:43%;--h:8%"></button>
+        <button data-form="gender" data-value="女" style="--x:52%;--y:16.6%;--w:43%;--h:8%"></button>
+        <button data-form="age" data-delta="-1" style="--x:8%;--y:27%;--w:25%;--h:7%"></button>
+        <button data-form="age" data-delta="1" style="--x:68%;--y:27%;--w:25%;--h:7%"></button>
+        <button data-form="height" data-delta="-1" style="--x:8%;--y:37.2%;--w:25%;--h:7%"></button>
+        <button data-form="height" data-delta="1" style="--x:68%;--y:37.2%;--w:25%;--h:7%"></button>
+        <button data-form="weight" data-delta="-1" style="--x:8%;--y:47.5%;--w:25%;--h:7%"></button>
+        <button data-form="weight" data-delta="1" style="--x:68%;--y:47.5%;--w:25%;--h:7%"></button>
+        <button data-form="habit" data-value="几乎不运动" style="--x:8%;--y:59.2%;--w:84%;--h:5%"></button>
+        <button data-form="habit" data-value="偶尔运动" style="--x:8%;--y:65%;--w:84%;--h:5%"></button>
+        <button data-form="habit" data-value="每周 1～2 次" style="--x:8%;--y:70.5%;--w:84%;--h:5%"></button>
+        <button data-form="habit" data-value="每周 3 次以上" style="--x:8%;--y:76.1%;--w:84%;--h:5%"></button>
+        <button data-form="habit" data-value="长期规律运动" style="--x:8%;--y:81.7%;--w:84%;--h:5%"></button>
+        <output id="formFeedback" aria-live="polite"></output>
+      </div>
       <div class="demo-toolbar">
         <button id="voiceButton" aria-label="切换语音">语音开</button>
         <span id="progressText"></span>
@@ -26,7 +43,6 @@
         <h1>老年人体适能测评</h1>
         <p>点击开始后将开启语音引导。您可以按照页面中的按钮体验完整测评流程。</p>
         <button id="startButton">开启语音体验</button>
-        <button class="report-shortcut" id="reportShortcut">直接查看评估报告</button>
       </div>
     </div>
     <audio id="narration" preload="auto"></audio>

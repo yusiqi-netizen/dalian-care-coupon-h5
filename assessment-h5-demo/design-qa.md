@@ -35,7 +35,12 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 
 - Start voice experience
 - Next and previous screen
+- Eight-item test tab navigation with active and completed states
+- Result-selection screens respond across the illustrated choice area
+- Keyboard navigation: previous, next, and direct test switching
 - Voice on/off
+- Illustrated content area toggles the current narration
+- Basic-information gender, number steppers, and exercise-habit controls respond
 - Countdown voice scheduling
 - Five-second countdown auto-advance
 - Recorded-result and report-generation auto-advance
