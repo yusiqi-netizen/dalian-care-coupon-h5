@@ -157,6 +157,13 @@ function renderScreen() {
   renderTestTabs();
   formHotspots.hidden = index !== 4;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
+  if (index === 3) {
+    primaryActionHotspot.style.top = "53%";
+    primaryActionHotspot.style.bottom = "auto";
+  } else {
+    primaryActionHotspot.style.top = "auto";
+    primaryActionHotspot.style.bottom = "104px";
+  }
   speechHotspot.hidden = !screen.manualAudio;
   if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
