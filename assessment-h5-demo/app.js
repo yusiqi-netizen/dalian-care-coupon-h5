@@ -38,6 +38,13 @@ const screens = [
   { image: "评估生成中.png", autoNext: 2200 },
   { image: "综合评估结果.png", report: true }
 ];
+// The supplied screenshot set does not contain the 30-second chair-stand intro
+// yet, so tabs 2 and 3 temporarily share the nearest supplied aerobic intro.
+const testStarts = [6, 10, 10, 15, 19, 23, 27, 31];
+const testRanges = [
+  [6, 10], [10, 10], [10, 15], [15, 19],
+  [19, 23], [23, 27], [27, 31], [31, 35]
+];
 
 const detailGroups = [
   { name:"肌肉适能",icon:"icon-strength.png",items:[["肌力",78,"良好","good"],["肌耐力",65,"中等","medium"]] },
@@ -60,6 +67,8 @@ let index = 0;
 let voiceEnabled = true;
 let countdownTimers = [];
 let flowTimer = null;
+let selectedTestTab = null;
+const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
 const image = document.querySelector("#screenImage");
 const detailView = document.querySelector("#detailView");
@@ -67,6 +76,13 @@ const narration = document.querySelector("#narration");
 const progressText = document.querySelector("#progressText");
 const flowStatus = document.querySelector("#flowStatus");
 const welcomeMask = document.querySelector("#welcomeMask");
+const testTabs = document.querySelector("#testTabs");
+const formHotspots = document.querySelector("#formHotspots");
+const formFeedback = document.querySelector("#formFeedback");
+
+testTabs.innerHTML = testStarts.map((_, tabIndex) =>
+  `<button type="button" data-test-tab="${tabIndex}" aria-label="切换到第${tabIndex + 1}项测试"><span>${tabIndex + 1}</span></button>`
+).join("");
 
 function assetPath(folder, name) { return `./${folder}/${encodeURIComponent(name)}`; }
 function clearFlowTimers() {
@@ -104,6 +120,8 @@ function renderScreen() {
   stage.hidden = false;
   stage.scrollTop = 0;
   const screen = screens[index];
+  renderTestTabs();
+  formHotspots.hidden = index !== 4;
   image.classList.add("is-loading");
   image.src = assetPath("screens", screen.image);
   progressText.textContent = `${index + 1}/${screens.length}`;
@@ -113,6 +131,37 @@ function renderScreen() {
     flowTimer = setTimeout(() => next(true), screen.autoNext);
   }
   history.replaceState(null, "", `#step=${index + 1}`);
+}
+function currentTestIndex() {
+  if (selectedTestTab !== null && testStarts[selectedTestTab] === index) return selectedTestTab;
+  return testRanges.findIndex(([start, end], tabIndex) =>
+    tabIndex !== 1 && index >= start && index < end
+  );
+}
+function renderTestTabs() {
+  const active = currentTestIndex();
+  testTabs.hidden = active < 0;
+  testTabs.querySelectorAll("button").forEach((button, tabIndex) => {
+    button.classList.toggle("active", tabIndex === active);
+    button.classList.toggle("completed", tabIndex < active);
+    button.setAttribute("aria-current", tabIndex === active ? "step" : "false");
+  });
+}
+function jumpToTest(tabIndex) {
+  const target = testStarts[tabIndex];
+  if (target === undefined) return;
+  clearFlowTimers();
+  stopAudio();
+  index = target;
+  selectedTestTab = tabIndex;
+  renderScreen();
+  showFlowStatus(`已切换到第 ${tabIndex + 1} 项测试`);
+}
+function showFormFeedback(message) {
+  formFeedback.textContent = message;
+  formFeedback.classList.add("show");
+  clearTimeout(showFormFeedback.timer);
+  showFormFeedback.timer = setTimeout(() => formFeedback.classList.remove("show"), 1100);
 }
 function next(fromAuto = false) {
   if (screens[index].autoNext && !fromAuto) {
@@ -150,9 +199,42 @@ function toast(message) {
 }
 
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
-document.querySelector("#reportShortcut").addEventListener("click", () => { welcomeMask.hidden = true; index = screens.length - 1; renderScreen(); });
 document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
+image.addEventListener("click", () => {
+  if (index === 29 || index === 33) {
+    next();
+    return;
+  }
+  const audio = screens[index].audio;
+  if (!audio) return;
+  if (!narration.paused) {
+    stopAudio();
+    showFlowStatus("朗读已暂停");
+  } else {
+    playAudio(audio);
+    showFlowStatus("正在朗读，再点一次暂停");
+  }
+});
+testTabs.addEventListener("click", event => {
+  const button = event.target.closest("[data-test-tab]");
+  if (button) jumpToTest(Number(button.dataset.testTab));
+});
+formHotspots.addEventListener("click", event => {
+  const control = event.target.closest("[data-form]");
+  if (!control) return;
+  const field = control.dataset.form;
+  if (control.dataset.delta) {
+    const limits = { age:[50,79], height:[150,200], weight:[35,150] };
+    const [min, max] = limits[field];
+    formData[field] = Math.max(min, Math.min(max, formData[field] + Number(control.dataset.delta)));
+    const unit = field === "age" ? "岁" : field === "height" ? "厘米" : "公斤";
+    showFormFeedback(`${field === "age" ? "年龄" : field === "height" ? "身高" : "体重"}：${formData[field]}${unit}`);
+  } else {
+    formData[field] = control.dataset.value;
+    showFormFeedback(`${field === "gender" ? "性别" : "运动习惯"}：${formData[field]}`);
+  }
+});
 document.querySelector("#voiceButton").addEventListener("click", event => {
   voiceEnabled = !voiceEnabled;
   event.currentTarget.textContent = voiceEnabled ? "语音开" : "语音关";
@@ -175,6 +257,12 @@ window.addEventListener("hashchange", () => {
     const target = Number(match[1]) - 1;
     if (target >= 0 && target < screens.length && target !== index) { index = target; renderScreen(); }
   }
+});
+window.addEventListener("keydown", event => {
+  if (!welcomeMask.hidden || !detailView.hidden) return;
+  if (event.key === "ArrowRight" || event.key === "Enter") next();
+  if (event.key === "ArrowLeft") back();
+  if (/^[1-8]$/.test(event.key)) jumpToTest(Number(event.key) - 1);
 });
 const initialStep = location.hash.match(/^#step=(\d+)$/);
 if (initialStep) {
