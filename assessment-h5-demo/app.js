@@ -261,6 +261,11 @@ document.querySelector("#startButton").addEventListener("click", () => { welcome
 document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
 primaryActionHotspot.addEventListener("click", next);
+stage.addEventListener("click", event => {
+  if (event.target !== image || !primaryActionScreens.has(index)) return;
+  const bounds = stage.getBoundingClientRect();
+  if (event.clientY - bounds.top > bounds.height * 0.56) next();
+});
 speechHotspot.addEventListener("click", () => {
   const audio = screens[index].manualAudio;
   if (!audio) return;
