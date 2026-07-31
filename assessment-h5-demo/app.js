@@ -279,6 +279,10 @@ formHotspots.addEventListener("click", event => {
   const control = event.target.closest("[data-form]");
   if (!control) return;
   const field = control.dataset.form;
+  if (field === "submit") {
+    next();
+    return;
+  }
   if (control.dataset.delta) {
     const limits = { age:[50,79], height:[150,200], weight:[35,150] };
     const [min, max] = limits[field];
