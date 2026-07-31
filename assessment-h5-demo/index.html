@@ -59,7 +59,12 @@
         <output id="formFeedback" aria-live="polite"></output>
       </div>
       <button class="speech-hotspot" id="speechHotspot" aria-label="播放或暂停当前说明" hidden></button>
-      <output class="live-time" id="liveTime" aria-live="polite" hidden></output>
+      <section class="dynamic-test-panel" id="dynamicTestPanel" hidden>
+        <div class="dynamic-countdown-label">倒计时 5 秒后开始</div>
+        <output class="live-time" id="liveTime" aria-live="polite"></output>
+        <div class="dynamic-time-units"><span>分钟</span><span>秒</span></div>
+        <button class="dynamic-complete" id="dynamicComplete">完成测试</button>
+      </section>
       <div class="demo-toolbar">
         <button id="voiceButton" aria-label="切换语音">语音开</button>
         <span id="progressText"></span>
