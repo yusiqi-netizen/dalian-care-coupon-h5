@@ -1,37 +1,37 @@
 const screens = [
   { image: "介绍页.png" },
-  { image: "注意事项.png", audio: "notice-speech.mp3" },
-  { image: "准备物品.png", audio: "goods-speech.mp3" },
-  { image: "填写预告.png", audio: "preface-speech.mp3" },
+  { image: "注意事项.png", manualAudio: "notice-speech.mp3", speechY: 150 },
+  { image: "准备物品.png", manualAudio: "goods-speech.mp3", speechY: 150 },
+  { image: "填写预告.png", manualAudio: "preface-speech.mp3", speechY: 555 },
   { image: "填写信息.png" },
-  { image: "信息录入-开始前.png", audio: "ready-speech.mp3" },
-  { image: "握力测试 1.png", audio: "grip-speech.mp3" },
+  { image: "信息录入-开始前.png", manualAudio: "ready-speech.mp3", speechY: 500 },
+  { image: "握力测试 1.png", manualAudio: "grip-speech.mp3", speechY: 420 },
   { image: "开始前倒计时.png", countdown: true, autoNext: 5000 },
-  { image: "计时中.png", audio: "timer-speech.mp3" },
+  { image: "计时中.png", timer: "up", autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:3000, audio:"timer-speech.mp3" }, { after:21000, audio:"timer-second-speech.mp3" }] },
   { image: "完成.png" },
-  { image: "2分钟踏步测试.png", audio: "test-two-intro-speech.mp3" },
+  { image: "2分钟踏步测试.png", manualAudio: "test-two-intro-speech.mp3", speechY: 420 },
   { image: "2分钟踏步测试前倒计时五秒.png", countdown: true, autoNext: 5000 },
-  { image: "2分钟踏步测试中.png", audio: "test-two-timer-speech.mp3" },
-  { image: "2分钟踏步测试剩 10 秒.png", audio: "test-two-ten-speech.mp3" },
-  { image: "2分钟踏步测试完成.png", audio: "test-two-result-speech.mp3" },
-  { image: "最长发声时间测试.png", audio: "test-three-intro-speech.mp3" },
+  { image: "2分钟踏步测试中.png", timer: "down30", autoNext: 20000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:2000, audio:"test-two-timer-speech.mp3" }] },
+  { image: "2分钟踏步测试剩 10 秒.png", timer: "down10", autoNext: 10000, autoAudio: "test-two-ten-speech.mp3" },
+  { image: "2分钟踏步测试完成.png", delayedAudio: [{ after:1000, audio:"test-two-result-speech.mp3" }] },
+  { image: "最长发声时间测试.png", manualAudio: "test-three-intro-speech.mp3", speechY: 420 },
   { image: "最长发声时间测试倒计时 5 秒.png", countdown: true, autoNext: 5000 },
-  { image: "最长发声时间测试中.png", audio: "test-start-speech.mp3" },
-  { image: "发声测试完成.png", audio: "test-three-result-speech.mp3" },
-  { image: "单腿站立测试.png", audio: "test-four-intro-speech.mp3" },
+  { image: "最长发声时间测试中.png", timer: "down120", autoNext: 120000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:110000, audio:"test-three-ten-speech.mp3" }] },
+  { image: "发声测试完成.png", delayedAudio: [{ after:1000, audio:"test-three-result-speech.mp3" }] },
+  { image: "单腿站立测试.png", manualAudio: "test-four-intro-speech.mp3", speechY: 420 },
   { image: "单腿站立测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
-  { image: "单腿站立测试中.png", audio: "test-start-speech.mp3" },
+  { image: "单腿站立测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "单腿站立测试完成.png" },
   { image: "计时走测试.png" },
   { image: "计时走测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
-  { image: "计时走测试中.png", audio: "test-six-timer-speech.mp3" },
+  { image: "计时走测试中.png", timer: "up", autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:1400, audio:"test-six-timer-speech.mp3" }] },
   { image: "计时走测试完成.png" },
-  { image: "坐位体前屈测试.png", audio: "test-seven-intro-speech.mp3" },
-  { image: "坐位体前屈测试中.png", audio: "test-seven-timer-speech.mp3" },
+  { image: "坐位体前屈测试.png", manualAudio: "test-seven-intro-speech.mp3", speechY: 420 },
+  { image: "坐位体前屈测试中.png", manualAudio: "test-seven-timer-speech.mp3", autoAudio: "test-seven-timer-speech.mp3", speechY: 420 },
   { image: "坐位体前屈测试结果选择.png" },
   { image: "坐位体前屈测试结果已记录.png", autoNext: 1600 },
-  { image: "肩屈曲测试.png", audio: "test-eight-intro-speech.mp3" },
-  { image: "肩屈曲测试中.png", audio: "test-eight-first-speech.mp3" },
+  { image: "肩屈曲测试.png", manualAudio: "test-eight-intro-speech.mp3", speechY: 420 },
+  { image: "肩屈曲测试中.png", autoAudio: "test-eight-first-speech.mp3", delayedAudio: [{ after:5200, audio:"test-eight-second-speech.mp3" }] },
   { image: "肩屈曲测试选择结果.png" },
   { image: "肩屈曲测试结果记录.png", autoNext: 1600 },
   { image: "获取报告.png" },
@@ -68,6 +68,7 @@ let voiceEnabled = true;
 let countdownTimers = [];
 let flowTimer = null;
 let selectedTestTab = null;
+let liveTimer = null;
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
 const image = document.querySelector("#screenImage");
@@ -79,6 +80,8 @@ const welcomeMask = document.querySelector("#welcomeMask");
 const testTabs = document.querySelector("#testTabs");
 const formHotspots = document.querySelector("#formHotspots");
 const formFeedback = document.querySelector("#formFeedback");
+const speechHotspot = document.querySelector("#speechHotspot");
+const liveTime = document.querySelector("#liveTime");
 
 testTabs.innerHTML = testStarts.map((_, tabIndex) =>
   `<button type="button" data-test-tab="${tabIndex}" aria-label="切换到第${tabIndex + 1}项测试"><span>${tabIndex + 1}</span></button>`
@@ -90,10 +93,13 @@ function clearFlowTimers() {
   countdownTimers = [];
   if (flowTimer) clearTimeout(flowTimer);
   flowTimer = null;
+  if (liveTimer) clearInterval(liveTimer);
+  liveTimer = null;
   flowStatus.classList.remove("show");
   flowStatus.textContent = "";
+  liveTime.hidden = true;
 }
-function stopAudio() { narration.pause(); narration.currentTime = 0; countdownTimers.forEach(clearTimeout); countdownTimers = []; }
+function stopAudio() { narration.pause(); narration.currentTime = 0; }
 function showFlowStatus(message, duration = 1800) {
   flowStatus.textContent = message;
   flowStatus.classList.add("show");
@@ -109,23 +115,61 @@ function playCountdown() {
   stopAudio();
   [5,4,3,2,1].forEach((number, i) => {
     countdownTimers.push(setTimeout(() => {
+      liveTime.textContent = number;
       narration.src = assetPath("audio", `countdown-${number}.mp3`);
       narration.play().catch(() => {});
-    }, i * 900));
+    }, i * 1000));
+  });
+}
+function startLiveTimer(mode) {
+  if (!mode) return;
+  liveTime.hidden = false;
+  liveTime.style.setProperty("--timer-y", "248px");
+  const startedAt = Date.now();
+  const duration = mode === "down30" ? 30 : mode === "down10" ? 10 : mode === "down120" ? 120 : null;
+  const update = () => {
+    const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+    const total = duration === null ? elapsed : Math.max(0, duration - elapsed);
+    const minutes = Math.floor(total / 60);
+    const seconds = total % 60;
+    liveTime.textContent = `${String(minutes).padStart(2,"0")} : ${String(seconds).padStart(2,"0")}`;
+  };
+  update();
+  liveTimer = setInterval(update, 200);
+}
+function scheduleScreenAudio(screen) {
+  if (screen.autoAudio) playAudio(screen.autoAudio);
+  (screen.delayedAudio || []).forEach(item => {
+    countdownTimers.push(setTimeout(() => {
+      if (screens[index] === screen) playAudio(item.audio);
+    }, item.after));
   });
 }
 function renderScreen() {
   clearFlowTimers();
+  stopAudio();
   detailView.hidden = true;
   stage.hidden = false;
   stage.scrollTop = 0;
   const screen = screens[index];
   renderTestTabs();
   formHotspots.hidden = index !== 4;
+  speechHotspot.hidden = !screen.manualAudio;
+  if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
   image.src = assetPath("screens", screen.image);
   progressText.textContent = `${index + 1}/${screens.length}`;
-  if (screen.countdown) playCountdown(); else playAudio(screen.audio);
+  if (screen.countdown) {
+    liveTime.classList.add("countdown");
+    liveTime.hidden = false;
+    liveTime.style.setProperty("--timer-y", "365px");
+    liveTime.textContent = "5";
+    playCountdown();
+  } else {
+    liveTime.classList.remove("countdown");
+    scheduleScreenAudio(screen);
+    startLiveTimer(screen.timer);
+  }
   if (screen.autoNext) {
     showFlowStatus(screen.countdown ? "倒计时结束后自动开始" : "正在自动记录…", Math.min(screen.autoNext - 200, 1800));
     flowTimer = setTimeout(() => next(true), screen.autoNext);
@@ -162,6 +206,18 @@ function showFormFeedback(message) {
   formFeedback.classList.add("show");
   clearTimeout(showFormFeedback.timer);
   showFormFeedback.timer = setTimeout(() => formFeedback.classList.remove("show"), 1100);
+}
+function renderFormData() {
+  const units = { age:"岁", height:"厘米", weight:"公斤" };
+  Object.keys(units).forEach(field => {
+    formHotspots.querySelector(`[data-value-for="${field}"]`).textContent = `${formData[field]}${units[field]}`;
+  });
+  formHotspots.querySelectorAll('[data-form="gender"]').forEach(button =>
+    button.classList.toggle("selected", button.dataset.value === formData.gender)
+  );
+  formHotspots.querySelectorAll('[data-form="habit"]').forEach(button =>
+    button.classList.toggle("selected", button.dataset.value === formData.habit)
+  );
 }
 function next(fromAuto = false) {
   if (screens[index].autoNext && !fromAuto) {
@@ -201,12 +257,8 @@ function toast(message) {
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
 document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
-image.addEventListener("click", () => {
-  if (index === 29 || index === 33) {
-    next();
-    return;
-  }
-  const audio = screens[index].audio;
+speechHotspot.addEventListener("click", () => {
+  const audio = screens[index].manualAudio;
   if (!audio) return;
   if (!narration.paused) {
     stopAudio();
@@ -215,6 +267,9 @@ image.addEventListener("click", () => {
     playAudio(audio);
     showFlowStatus("正在朗读，再点一次暂停");
   }
+});
+image.addEventListener("click", () => {
+  if (index === 29 || index === 33) next();
 });
 testTabs.addEventListener("click", event => {
   const button = event.target.closest("[data-test-tab]");
@@ -234,11 +289,12 @@ formHotspots.addEventListener("click", event => {
     formData[field] = control.dataset.value;
     showFormFeedback(`${field === "gender" ? "性别" : "运动习惯"}：${formData[field]}`);
   }
+  renderFormData();
 });
 document.querySelector("#voiceButton").addEventListener("click", event => {
   voiceEnabled = !voiceEnabled;
   event.currentTarget.textContent = voiceEnabled ? "语音开" : "语音关";
-  if (!voiceEnabled) stopAudio(); else playAudio(screens[index].audio);
+  if (!voiceEnabled) stopAudio();
 });
 image.addEventListener("load", () => image.classList.remove("is-loading"));
 image.addEventListener("error", () => {
