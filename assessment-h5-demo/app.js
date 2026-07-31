@@ -83,7 +83,7 @@ const formFeedback = document.querySelector("#formFeedback");
 const speechHotspot = document.querySelector("#speechHotspot");
 const liveTime = document.querySelector("#liveTime");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
-const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 9, 10, 15, 19, 23, 27, 28, 31, 32, 35]);
+const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
 testTabs.innerHTML = testStarts.map((_, tabIndex) =>
   `<button type="button" data-test-tab="${tabIndex}" aria-label="切换到第${tabIndex + 1}项测试"><span>${tabIndex + 1}</span></button>`
@@ -160,6 +160,9 @@ function renderScreen() {
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
     primaryActionHotspot.style.bottom = "auto";
+  } else if ([8, 21, 25].includes(index)) {
+    primaryActionHotspot.style.top = "59%";
+    primaryActionHotspot.style.bottom = "auto";
   } else {
     primaryActionHotspot.style.top = "auto";
     primaryActionHotspot.style.bottom = "104px";
@@ -172,7 +175,7 @@ function renderScreen() {
   if (screen.countdown) {
     liveTime.classList.add("countdown");
     liveTime.hidden = false;
-    liveTime.style.setProperty("--timer-y", "365px");
+    liveTime.style.setProperty("--timer-y", "379px");
     liveTime.textContent = "5";
     playCountdown();
   } else {
