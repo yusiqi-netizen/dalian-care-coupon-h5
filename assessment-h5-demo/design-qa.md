@@ -37,6 +37,10 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - Next and previous screen
 - Voice on/off
 - Countdown voice scheduling
+- Five-second countdown auto-advance
+- Recorded-result and report-generation auto-advance
+- Direct step access and refresh recovery through the URL hash
+- Image loading and failure feedback
 - Direct report shortcut
 - Comprehensive report to item detail
 - Detail report scrolling
