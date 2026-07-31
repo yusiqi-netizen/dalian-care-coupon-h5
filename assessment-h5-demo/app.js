@@ -82,6 +82,8 @@ const formHotspots = document.querySelector("#formHotspots");
 const formFeedback = document.querySelector("#formFeedback");
 const speechHotspot = document.querySelector("#speechHotspot");
 const liveTime = document.querySelector("#liveTime");
+const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
+const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 9, 10, 15, 19, 23, 27, 28, 31, 32, 35]);
 
 testTabs.innerHTML = testStarts.map((_, tabIndex) =>
   `<button type="button" data-test-tab="${tabIndex}" aria-label="切换到第${tabIndex + 1}项测试"><span>${tabIndex + 1}</span></button>`
@@ -154,6 +156,7 @@ function renderScreen() {
   const screen = screens[index];
   renderTestTabs();
   formHotspots.hidden = index !== 4;
+  primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   speechHotspot.hidden = !screen.manualAudio;
   if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
@@ -257,6 +260,7 @@ function toast(message) {
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
 document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
+primaryActionHotspot.addEventListener("click", next);
 speechHotspot.addEventListener("click", () => {
   const audio = screens[index].manualAudio;
   if (!audio) return;
