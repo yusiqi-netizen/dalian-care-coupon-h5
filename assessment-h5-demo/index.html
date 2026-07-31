@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+  <meta name="theme-color" content="#f3f9f6">
+  <title>老年人体适能测评</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="phone-shell" id="app">
+    <section class="screen-stage" id="screenStage">
+      <img class="screen-image" id="screenImage" alt="老年人体适能测评页面">
+      <button class="tap-zone tap-back" id="backButton" aria-label="返回上一页"></button>
+      <button class="tap-zone tap-next" id="nextButton" aria-label="继续下一步"></button>
+      <div class="demo-toolbar">
+        <button id="voiceButton" aria-label="切换语音">语音开</button>
+        <span id="progressText"></span>
+      </div>
+    </section>
+    <section class="detail-view" id="detailView" hidden></section>
+    <div class="welcome-mask" id="welcomeMask">
+      <div class="welcome-card">
+        <img src="./assets/icon-report.png" alt="">
+        <h1>老年人体适能测评</h1>
+        <p>点击开始后将开启语音引导。您可以按照页面中的按钮体验完整测评流程。</p>
+        <button id="startButton">开启语音体验</button>
+        <button class="report-shortcut" id="reportShortcut">直接查看评估报告</button>
+      </div>
+    </div>
+    <audio id="narration" preload="auto"></audio>
+  </main>
+  <script src="./app.js"></script>
+</body>
+</html>
