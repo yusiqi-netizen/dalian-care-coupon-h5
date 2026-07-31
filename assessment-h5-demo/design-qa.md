@@ -44,6 +44,8 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - Basic-information gender, number steppers, and exercise-habit controls visibly update
 - Five-second countdown number changes on screen while its matching number audio plays
 - Stopwatch and fixed-duration test displays update from real elapsed time
+- Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
+- Elapsed-time test completion buttons advance to their result screens
 - Countdown voice scheduling
 - Five-second countdown auto-advance
 - Recorded-result and report-generation auto-advance
