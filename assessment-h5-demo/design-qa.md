@@ -39,8 +39,11 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - Result-selection screens respond across the illustrated choice area
 - Keyboard navigation: previous, next, and direct test switching
 - Voice on/off
-- Illustrated content area toggles the current narration
-- Basic-information gender, number steppers, and exercise-habit controls respond
+- Introductory narration plays only from its dedicated read control
+- Automatic narration is limited to countdown, test start, timed prompts, and selected result prompts
+- Basic-information gender, number steppers, and exercise-habit controls visibly update
+- Five-second countdown number changes on screen while its matching number audio plays
+- Stopwatch and fixed-duration test displays update from real elapsed time
 - Countdown voice scheduling
 - Five-second countdown auto-advance
 - Recorded-result and report-generation auto-advance

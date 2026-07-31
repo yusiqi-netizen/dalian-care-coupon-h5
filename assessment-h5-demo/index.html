@@ -15,21 +15,26 @@
       <button class="tap-zone tap-next" id="nextButton" aria-label="继续下一步"></button>
       <nav class="test-tabs" id="testTabs" aria-label="八项测试快速切换" hidden></nav>
       <div class="form-hotspots" id="formHotspots" hidden>
-        <button data-form="gender" data-value="男" style="--x:5%;--y:16.6%;--w:43%;--h:8%"></button>
-        <button data-form="gender" data-value="女" style="--x:52%;--y:16.6%;--w:43%;--h:8%"></button>
-        <button data-form="age" data-delta="-1" style="--x:8%;--y:27%;--w:25%;--h:7%"></button>
-        <button data-form="age" data-delta="1" style="--x:68%;--y:27%;--w:25%;--h:7%"></button>
-        <button data-form="height" data-delta="-1" style="--x:8%;--y:37.2%;--w:25%;--h:7%"></button>
-        <button data-form="height" data-delta="1" style="--x:68%;--y:37.2%;--w:25%;--h:7%"></button>
-        <button data-form="weight" data-delta="-1" style="--x:8%;--y:47.5%;--w:25%;--h:7%"></button>
-        <button data-form="weight" data-delta="1" style="--x:68%;--y:47.5%;--w:25%;--h:7%"></button>
-        <button data-form="habit" data-value="几乎不运动" style="--x:8%;--y:59.2%;--w:84%;--h:5%"></button>
-        <button data-form="habit" data-value="偶尔运动" style="--x:8%;--y:65%;--w:84%;--h:5%"></button>
-        <button data-form="habit" data-value="每周 1～2 次" style="--x:8%;--y:70.5%;--w:84%;--h:5%"></button>
-        <button data-form="habit" data-value="每周 3 次以上" style="--x:8%;--y:76.1%;--w:84%;--h:5%"></button>
-        <button data-form="habit" data-value="长期规律运动" style="--x:8%;--y:81.7%;--w:84%;--h:5%"></button>
+        <button class="gender-control selected" data-form="gender" data-value="男" style="--x:9%;--y:19.8%;--w:38%;--h:3.7%">男</button>
+        <button class="gender-control" data-form="gender" data-value="女" style="--x:53%;--y:19.8%;--w:38%;--h:3.7%">女</button>
+        <button class="step-control minus" aria-label="年龄减一" data-form="age" data-delta="-1" style="--x:18%;--y:31%;--w:28px;--h:28px">−</button>
+        <output class="number-value" data-value-for="age" style="--x:35%;--y:30.5%;--w:30%;--h:3.6%">59岁</output>
+        <button class="step-control plus" aria-label="年龄加一" data-form="age" data-delta="1" style="--x:76%;--y:31%;--w:28px;--h:28px">＋</button>
+        <button class="step-control minus" aria-label="身高减一" data-form="height" data-delta="-1" style="--x:18%;--y:41.8%;--w:28px;--h:28px">−</button>
+        <output class="number-value" data-value-for="height" style="--x:34%;--y:41.3%;--w:32%;--h:3.6%">170厘米</output>
+        <button class="step-control plus" aria-label="身高加一" data-form="height" data-delta="1" style="--x:76%;--y:41.8%;--w:28px;--h:28px">＋</button>
+        <button class="step-control minus" aria-label="体重减一" data-form="weight" data-delta="-1" style="--x:18%;--y:52.6%;--w:28px;--h:28px">−</button>
+        <output class="number-value" data-value-for="weight" style="--x:34%;--y:52.1%;--w:32%;--h:3.6%">65公斤</output>
+        <button class="step-control plus" aria-label="体重加一" data-form="weight" data-delta="1" style="--x:76%;--y:52.6%;--w:28px;--h:28px">＋</button>
+        <button class="habit-control selected" data-form="habit" data-value="几乎不运动" style="--x:9%;--y:64.1%;--w:82%;--h:3.9%"><i></i>几乎不运动</button>
+        <button class="habit-control" data-form="habit" data-value="偶尔运动" style="--x:9%;--y:68.7%;--w:82%;--h:3.9%"><i></i>偶尔运动</button>
+        <button class="habit-control" data-form="habit" data-value="每周 1～2 次" style="--x:9%;--y:73.3%;--w:82%;--h:3.9%"><i></i>每周 1～2 次</button>
+        <button class="habit-control" data-form="habit" data-value="每周 3 次以上" style="--x:9%;--y:77.9%;--w:82%;--h:3.9%"><i></i>每周 3 次以上</button>
+        <button class="habit-control" data-form="habit" data-value="长期规律运动" style="--x:9%;--y:82.5%;--w:82%;--h:3.9%"><i></i>长期规律运动</button>
         <output id="formFeedback" aria-live="polite"></output>
       </div>
+      <button class="speech-hotspot" id="speechHotspot" aria-label="播放或暂停当前说明" hidden></button>
+      <output class="live-time" id="liveTime" aria-live="polite" hidden></output>
       <div class="demo-toolbar">
         <button id="voiceButton" aria-label="切换语音">语音开</button>
         <span id="progressText"></span>
