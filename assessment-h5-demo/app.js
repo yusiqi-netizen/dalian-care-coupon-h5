@@ -409,9 +409,9 @@ function back() {
   clearFlowTimers();
   if (index > 0) { index -= 1; renderScreen(); }
 }
-function metricHtml(item, hideName = false) {
+function metricHtml(item) {
   const [name,score,level,tone] = item;
-  return `<div class="metric ${hideName ? "no-name" : ""}">${hideName ? "" : `<span>${name}</span>`}<span class="bar"><i></i><i></i><i></i><i></i><em class="pin ${tone}" style="left:${score}%"></em></span><span class="score ${tone}">${score}分</span><span class="level ${tone}">${level}</span></div>`;
+  return `<div class="ability-row-detail"><span class="ability-name">${name}</span><span class="ability-track"><i></i><i></i><i></i><i></i><em class="ability-marker ${tone}" style="left:${score}%"><b></b></em></span><span class="ability-score ${tone}">${score}分</span><span class="ability-level ${tone}">${level}</span></div>`;
 }
 function showDetail() {
   clearFlowTimers();
@@ -419,9 +419,9 @@ function showDetail() {
   stage.hidden = true;
   detailView.hidden = false;
   detailView.scrollTop = 0;
-  const abilities = detailGroups.map((group, groupIndex) => `<article class="ability-card"><div class="ability-side"><img src="./assets/${group.icon}" alt=""><span>${group.name.replace("适能", "<br>适能")}</span></div><div class="ability-data">${group.items.map(item => metricHtml(item, groupIndex > 0)).join("")}</div></article>`).join("");
-  const tests = detailTests.map(test => `<article class="test-card"><div class="test-head"><b>${test[0]}</b><span class="test-tag ${test[5]}">${test[1]}</span></div><div class="test-result">您的成绩：<strong>${test[2]}</strong></div><div class="copy"><span>评</span><div><b>评价</b><p>${test[3]}</p></div></div><div class="copy advice"><span>荐</span><div><b>建议</b><p>${test[4]}</p></div></div></article>`).join("");
-  detailView.innerHTML = `<header class="detail-header"><img src="./assets/report-avatar.png" alt="用户头像"><div><div class="user-line"><b>用户1204</b><span>男</span><span>62岁</span></div><div class="detail-date">2026年7月27日完成测评</div></div></header><main class="report-card"><h2 class="section-title">八项能力总览</h2><div class="ability-list">${abilities}</div><h2 class="section-title tests-title">单项测试详情</h2>${tests}<section class="summary"><h3>总体分析</h3><p class="good"><b>您的优势</b><br>肌肉力量充沛，心肺耐力良好</p><p class="medium"><b>建议关注</b><br>加强动态平衡，增加上肢柔韧练习</p></section><button class="save-report" data-action="save">保存报告</button></main><footer class="detail-actions"><button data-action="back-report">返回</button><button class="prescription" data-action="prescription">查看运动处方 →</button></footer>`;
+  const abilities = detailGroups.map(group => `<article class="ability-group"><div class="ability-group-title"><img src="./assets/${group.icon}" alt=""><span>${group.name}</span></div><div class="ability-group-data">${group.items.map(metricHtml).join("")}</div></article>`).join("");
+  const tests = detailTests.map(test => `<article class="detail-test-card"><div class="test-card-head"><strong>${test[0]}</strong><span class="test-level ${test[5]}">${test[1]}</span></div><div class="test-result">您的成绩：<strong>${test[2]}</strong></div><div class="test-copy"><span class="copy-mark good">评</span><div><strong>评价</strong><span>${test[3]}</span></div></div><div class="test-copy"><span class="copy-mark medium">荐</span><div><strong>建议</strong><span>${test[4]}</span></div></div></article>`).join("");
+  detailView.innerHTML = `<header class="detail-mini-header"><button data-action="back-report" aria-label="返回"><img src="./assets/icon-back.svg" alt=""></button><h1>老年人体适能测评</h1></header><div class="detail-report-page"><div class="detail-report-scroll"><div class="detail-report-content"><section class="detail-hero"><img class="detail-avatar" src="./assets/report-avatar.png" alt="用户头像"><div class="detail-user"><div class="detail-user-line"><strong>用户1204</strong><span>男</span><span>62岁</span></div><div class="detail-date">2026年7月27日完成测评</div></div></section><main class="detail-sheet"><h2 class="detail-section-title">八项能力总览</h2><div class="ability-groups">${abilities}</div><h2 class="detail-section-title test-detail-heading">单项测试详情</h2>${tests}<section class="detail-summary-card"><h3 class="summary-title">总体分析</h3><p class="summary-block good"><strong>您的优势</strong><span>肌肉力量充沛，心肺耐力良好</span></p><p class="summary-block medium"><strong>建议关注</strong><span>加强动态平衡，增加上肢柔韧练习</span></p></section><button class="detail-save-report" data-action="save">保存报告</button><div class="detail-bottom-space"></div></main></div></div><footer class="detail-actions"><button data-action="back-report">返回</button><button class="detail-primary-action" data-action="prescription">查看运动处方 <span>→</span></button></footer></div>`;
   history.replaceState(null, "", "#detail");
 }
 function toast(message) {
