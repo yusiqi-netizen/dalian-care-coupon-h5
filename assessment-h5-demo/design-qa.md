@@ -55,6 +55,10 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - The longest-voice test preserves the supplied voice illustration and uses a live upward stopwatch with its original end-button placement
 - The report-generation screen has a rotating circular progress overlay aligned over the exported static ring
 - Tests seven and eight use the mini-program's original four image options, selectable radio states, submit validation, and recorded feedback
+- The two-minute step test begins at 02:00, counts down for 110 seconds, then enters the original final-10-second state
+- The completed step count supports visible minus/plus changes, clamps to a safe range, and submits into the next test
+- Ability-group names use the intended two-line labels on a narrower colored panel; metric names, scores, and level descriptions stay on one line
+- The fixed report actions have a continuous white backing with no exposed dark rounded corners above the footer
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
 - Elapsed-time test completion buttons advance to their result screens

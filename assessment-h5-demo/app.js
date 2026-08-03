@@ -11,7 +11,7 @@ const screens = [
   { image: "完成.png" },
   { image: "2分钟踏步测试.png", manualAudio: "test-two-intro-speech.mp3", speechY: 420 },
   { image: "2分钟踏步测试前倒计时五秒.png", countdown: true, autoNext: 5000 },
-  { image: "2分钟踏步测试中.png", timer: "down30", autoNext: 20000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:2000, audio:"test-two-timer-speech.mp3" }] },
+  { image: "2分钟踏步测试中.png", timer: "down120", autoNext: 110000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:2000, audio:"test-two-timer-speech.mp3" }] },
   { image: "2分钟踏步测试剩 10 秒.png", timer: "down10", autoNext: 10000, autoAudio: "test-two-ten-speech.mp3" },
   { image: "2分钟踏步测试完成.png", delayedAudio: [{ after:1000, audio:"test-two-result-speech.mp3" }] },
   { image: "最长发声时间测试.png", manualAudio: "test-three-intro-speech.mp3", speechY: 420 },
@@ -68,6 +68,7 @@ let flowTimer = null;
 let selectedTestTab = null;
 let liveTimer = null;
 const resultChoices = { 29: 0, 33: 0 };
+let stepRepetitions = 45;
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
 const image = document.querySelector("#screenImage");
@@ -86,6 +87,8 @@ const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
+const repsControl = document.querySelector("#repsControl");
+const repsValue = document.querySelector("#repsValue");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
@@ -168,6 +171,8 @@ function renderScreen() {
   chairTestView.classList.toggle("background-only", chairMode && index !== 10);
   renderResultChoice();
   loadingRingOverlay.hidden = index !== 36;
+  repsControl.hidden = index !== 14;
+  repsValue.textContent = stepRepetitions;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
@@ -292,7 +297,7 @@ function showDetail() {
   stage.hidden = true;
   detailView.hidden = false;
   detailView.scrollTop = 0;
-  const abilities = detailGroups.map(group => `<article class="ability-card"><div class="ability-side"><img src="./assets/${group.icon}" alt=""><span>${group.name}</span></div><div class="ability-data">${group.items.map(metricHtml).join("")}</div></article>`).join("");
+  const abilities = detailGroups.map(group => `<article class="ability-card"><div class="ability-side"><img src="./assets/${group.icon}" alt=""><span>${group.name.replace("适能", "<br>适能")}</span></div><div class="ability-data">${group.items.map(metricHtml).join("")}</div></article>`).join("");
   const tests = detailTests.map(test => `<article class="test-card"><div class="test-head"><b>${test[0]}</b><span class="test-tag ${test[5]}">${test[1]}</span></div><div class="test-result">您的成绩：<strong>${test[2]}</strong></div><div class="copy"><span>评</span><div><b>评价</b><p>${test[3]}</p></div></div><div class="copy advice"><span>荐</span><div><b>建议</b><p>${test[4]}</p></div></div></article>`).join("");
   detailView.innerHTML = `<header class="detail-header"><img src="./assets/report-avatar.png" alt="用户头像"><div><div class="user-line"><b>用户1204</b><span>男</span><span>62岁</span></div><div class="detail-date">2026年7月27日完成测评</div></div></header><main class="report-card"><h2 class="section-title">八项能力总览</h2><div class="ability-list">${abilities}</div><h2 class="section-title tests-title">单项测试详情</h2>${tests}<section class="summary"><h3>总体分析</h3><p class="good"><b>您的优势</b><br>肌肉力量充沛，心肺耐力良好</p><p class="medium"><b>建议关注</b><br>加强动态平衡，增加上肢柔韧练习</p></section><button class="save-report" data-action="save">保存报告</button></main><footer class="detail-actions"><button data-action="back-report">返回</button><button class="prescription" data-action="prescription">查看运动处方 →</button></footer>`;
   history.replaceState(null, "", "#detail");
@@ -351,6 +356,15 @@ resultChoiceView.addEventListener("click", event => {
   }
   resultChoices[index] = 0;
   next();
+});
+repsControl.addEventListener("click", event => {
+  const deltaButton = event.target.closest("[data-reps-delta]");
+  if (deltaButton) {
+    stepRepetitions = Math.max(0, Math.min(999, stepRepetitions + Number(deltaButton.dataset.repsDelta)));
+    repsValue.textContent = stepRepetitions;
+    return;
+  }
+  if (event.target.closest("[data-reps-submit]")) next();
 });
 formHotspots.addEventListener("click", event => {
   const control = event.target.closest("[data-form]");
