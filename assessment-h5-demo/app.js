@@ -228,7 +228,7 @@ function renderScreen() {
       playAudio(timerPromptConfig[1]);
     }, 1000));
   }
-  testVideoOverlay.hidden = !([10, 11].includes(index) && selectedTestTab !== 1);
+  testVideoOverlay.hidden = !([10, 11, 12].includes(index) && selectedTestTab !== 1);
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
