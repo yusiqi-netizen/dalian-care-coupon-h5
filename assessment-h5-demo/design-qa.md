@@ -85,4 +85,6 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 
 No application console errors were observed during the verified local flow.
 
+The two-minute stepping intro and pre-countdown states overlay the supplied video component in its original 16:9 slot. The report footer uses equal 24px top and bottom padding. The second grip prompt waits for the first narration to finish, pauses for one second, then slides in and plays.
+
 final result: passed

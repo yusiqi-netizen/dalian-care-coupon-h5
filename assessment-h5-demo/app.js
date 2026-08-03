@@ -7,7 +7,7 @@ const screens = [
   { image: "信息录入-开始前.png", manualAudio: "ready-speech.mp3", speechY: 500 },
   { image: "握力测试 1.png", manualAudio: "grip-speech.mp3", speechY: 420 },
   { image: "开始前倒计时.png", countdown: true, autoNext: 5000 },
-  { image: "计时中.png", timer: "up", autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:3000, audio:"timer-speech.mp3" }, { after:21000, audio:"timer-second-speech.mp3" }] },
+  { image: "计时中.png", timer: "up" },
   { image: "完成.png" },
   { image: "2分钟踏步测试.png", manualAudio: "test-two-intro-speech.mp3", speechY: 420 },
   { image: "2分钟踏步测试前倒计时五秒.png", countdown: true, autoNext: 5000 },
@@ -97,6 +97,7 @@ const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
 const compactDemoCaption = document.querySelector("#compactDemoCaption");
 const gripPrompt = document.querySelector("#gripPrompt");
+const testVideoOverlay = document.querySelector("#testVideoOverlay");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
@@ -118,6 +119,7 @@ function clearFlowTimers() {
   flowStatus.classList.remove("show");
   flowStatus.textContent = "";
   dynamicTestPanel.hidden = true;
+  narration.onended = null;
 }
 function stopAudio() { narration.pause(); narration.currentTime = 0; }
 function showFlowStatus(message, duration = 1800) {
@@ -183,15 +185,32 @@ function renderScreen() {
   gripPrompt.hidden = index !== 8;
   gripPrompt.classList.remove("show", "second");
   if (index === 8) {
-    gripPrompt.querySelector("img").src = "./assets/请尽力保持这个姿势气泡.png";
-    countdownTimers.push(setTimeout(() => gripPrompt.classList.add("show"), 1000));
-    countdownTimers.push(setTimeout(() => {
+    let secondPromptShown = false;
+    let secondPromptFallback = null;
+    const showSecondPrompt = () => {
+      if (secondPromptShown || index !== 8) return;
+      secondPromptShown = true;
+      if (secondPromptFallback) clearTimeout(secondPromptFallback);
       gripPrompt.classList.remove("show");
-      gripPrompt.classList.add("second");
-      gripPrompt.querySelector("img").src = "./assets/无法继续时提示气泡.png";
-      countdownTimers.push(setTimeout(() => gripPrompt.classList.add("show"), 40));
-    }, 2000));
+      countdownTimers.push(setTimeout(() => {
+        if (index !== 8) return;
+        gripPrompt.classList.add("second");
+        gripPrompt.querySelector("img").src = "./assets/无法继续时提示气泡.png";
+        gripPrompt.classList.add("show");
+        playAudio("timer-second-speech.mp3");
+      }, 340));
+    };
+    gripPrompt.querySelector("img").src = "./assets/请尽力保持这个姿势气泡.png";
+    countdownTimers.push(setTimeout(() => {
+      if (index !== 8) return;
+      gripPrompt.classList.add("show");
+      playAudio("timer-speech.mp3");
+      narration.onended = () => countdownTimers.push(setTimeout(showSecondPrompt, 1000));
+      secondPromptFallback = setTimeout(showSecondPrompt, 3800);
+      countdownTimers.push(secondPromptFallback);
+    }, 1000));
   }
+  testVideoOverlay.hidden = ![10, 11].includes(index);
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
