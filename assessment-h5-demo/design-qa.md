@@ -30,12 +30,15 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 1. Initial preview exposed a static hosting path mismatch for assets and a hidden overlay still receiving layout.
 2. Assets were moved to root-relative static folders and `[hidden]` handling was added.
 3. Post-fix verification confirmed original screenshot loading, active narration, report shortcut navigation, and the real item-detail view.
+4. The second and third test tabs were separated, then the second-to-third transition and backward tab switch were verified in the browser.
+5. Countdown styling was centralized and visually checked against the supplied masked countdown reference.
 
 ## Interaction checks
 
 - Start voice experience
 - Next and previous screen
 - Eight-item test tab navigation with active and completed states
+- The second test has an independent 30-second chair-stand view and can be switched to from any test without refreshing
 - Result-selection screens respond across the illustrated choice area
 - Keyboard navigation: previous, next, and direct test switching
 - Voice on/off
@@ -43,6 +46,7 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - Automatic narration is limited to countdown, test start, timed prompts, and selected result prompts
 - Basic-information gender, number steppers, and exercise-habit controls visibly update
 - Five-second countdown number changes on screen while its matching number audio plays
+- Every timed-test countdown uses the same full-screen pure-black 54% dim layer with the centered light countdown panel above it
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
 - Elapsed-time test completion buttons advance to their result screens
