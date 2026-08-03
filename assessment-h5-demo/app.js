@@ -16,7 +16,7 @@ const screens = [
   { image: "2分钟踏步测试完成.png", delayedAudio: [{ after:1000, audio:"test-two-result-speech.mp3" }] },
   { image: "最长发声时间测试.png", manualAudio: "test-three-intro-speech.mp3", speechY: 420 },
   { image: "最长发声时间测试倒计时 5 秒.png", countdown: true, autoNext: 5000 },
-  { image: "最长发声时间测试中.png", timer: "down120", autoNext: 120000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:110000, audio:"test-three-ten-speech.mp3" }] },
+  { image: "最长发声时间测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "发声测试完成.png", delayedAudio: [{ after:1000, audio:"test-three-result-speech.mp3" }] },
   { image: "单腿站立测试.png", manualAudio: "test-four-intro-speech.mp3", speechY: 420 },
   { image: "单腿站立测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
@@ -35,7 +35,7 @@ const screens = [
   { image: "肩屈曲测试选择结果.png" },
   { image: "肩屈曲测试结果记录.png", autoNext: 1600 },
   { image: "获取报告.png" },
-  { image: "评估生成中.png", autoNext: 2200 },
+  { image: "评估生成中.png", autoNext: 5000 },
   { image: "综合评估结果.png", report: true }
 ];
 const testStarts = [6, 10, 10, 15, 19, 23, 27, 31];
@@ -85,6 +85,7 @@ const dynamicTestPanel = document.querySelector("#dynamicTestPanel");
 const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
+const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
@@ -130,7 +131,9 @@ function startLiveTimer(mode) {
   if (!mode) return;
   dynamicTestPanel.hidden = false;
   dynamicTestPanel.classList.remove("countdown");
-  dynamicTestPanel.classList.toggle("precise-timer", index === 21 || index === 25);
+  dynamicTestPanel.classList.toggle("precise-timer", [12, 13, 17, 21, 25].includes(index));
+  dynamicTestPanel.classList.toggle("lower-timer", [12, 13, 17].includes(index));
+  dynamicTestPanel.classList.toggle("fixed-timer", index === 12 || index === 13);
   const startedAt = Date.now();
   const duration = mode === "down30" ? 30 : mode === "down10" ? 10 : mode === "down120" ? 120 : null;
   const update = () => {
@@ -164,6 +167,7 @@ function renderScreen() {
   chairTestView.hidden = !chairMode;
   chairTestView.classList.toggle("background-only", chairMode && index !== 10);
   renderResultChoice();
+  loadingRingOverlay.hidden = index !== 36;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
@@ -185,6 +189,7 @@ function renderScreen() {
     dynamicTestPanel.hidden = false;
     dynamicTestPanel.classList.add("countdown");
     dynamicTestPanel.classList.remove("precise-timer");
+    dynamicTestPanel.classList.remove("lower-timer", "fixed-timer");
     liveTime.textContent = "5";
     playCountdown();
   } else {
