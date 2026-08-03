@@ -388,9 +388,9 @@ function back() {
   clearFlowTimers();
   if (index > 0) { index -= 1; renderScreen(); }
 }
-function metricHtml(item) {
+function metricHtml(item, hideName = false) {
   const [name,score,level,tone] = item;
-  return `<div class="metric"><span>${name}</span><span class="bar"><i></i><i></i><i></i><i></i><em class="pin ${tone}" style="left:${score}%"></em></span><span class="score ${tone}">${score}分</span><span class="level ${tone}">${level}</span></div>`;
+  return `<div class="metric ${hideName ? "no-name" : ""}">${hideName ? "" : `<span>${name}</span>`}<span class="bar"><i></i><i></i><i></i><i></i><em class="pin ${tone}" style="left:${score}%"></em></span><span class="score ${tone}">${score}分</span><span class="level ${tone}">${level}</span></div>`;
 }
 function showDetail() {
   clearFlowTimers();
@@ -398,7 +398,7 @@ function showDetail() {
   stage.hidden = true;
   detailView.hidden = false;
   detailView.scrollTop = 0;
-  const abilities = detailGroups.map(group => `<article class="ability-card"><div class="ability-side"><img src="./assets/${group.icon}" alt=""><span>${group.name.replace("适能", "<br>适能")}</span></div><div class="ability-data">${group.items.map(metricHtml).join("")}</div></article>`).join("");
+  const abilities = detailGroups.map((group, groupIndex) => `<article class="ability-card"><div class="ability-side"><img src="./assets/${group.icon}" alt=""><span>${group.name.replace("适能", "<br>适能")}</span></div><div class="ability-data">${group.items.map(item => metricHtml(item, groupIndex > 0)).join("")}</div></article>`).join("");
   const tests = detailTests.map(test => `<article class="test-card"><div class="test-head"><b>${test[0]}</b><span class="test-tag ${test[5]}">${test[1]}</span></div><div class="test-result">您的成绩：<strong>${test[2]}</strong></div><div class="copy"><span>评</span><div><b>评价</b><p>${test[3]}</p></div></div><div class="copy advice"><span>荐</span><div><b>建议</b><p>${test[4]}</p></div></div></article>`).join("");
   detailView.innerHTML = `<header class="detail-header"><img src="./assets/report-avatar.png" alt="用户头像"><div><div class="user-line"><b>用户1204</b><span>男</span><span>62岁</span></div><div class="detail-date">2026年7月27日完成测评</div></div></header><main class="report-card"><h2 class="section-title">八项能力总览</h2><div class="ability-list">${abilities}</div><h2 class="section-title tests-title">单项测试详情</h2>${tests}<section class="summary"><h3>总体分析</h3><p class="good"><b>您的优势</b><br>肌肉力量充沛，心肺耐力良好</p><p class="medium"><b>建议关注</b><br>加强动态平衡，增加上肢柔韧练习</p></section><button class="save-report" data-action="save">保存报告</button></main><footer class="detail-actions"><button data-action="back-report">返回</button><button class="prescription" data-action="prescription">查看运动处方 →</button></footer>`;
   history.replaceState(null, "", "#detail");
