@@ -177,7 +177,7 @@ function renderScreen() {
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
   repsValue.textContent = stepRepetitions;
-  primaryActionHotspot.hidden = !primaryActionScreens.has(index);
+  primaryActionHotspot.hidden = !primaryActionScreens.has(index) || compactDemoScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
     primaryActionHotspot.style.bottom = "auto";
@@ -360,6 +360,9 @@ resultChoiceView.addEventListener("click", event => {
   }
   resultChoices[index] = 0;
   next();
+});
+compactDemoCaption.addEventListener("click", event => {
+  if (event.target.closest(".compact-start")) next();
 });
 repsControl.addEventListener("click", event => {
   const deltaButton = event.target.closest("[data-reps-delta]");
