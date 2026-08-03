@@ -1,90 +1,49 @@
-# Design QA
+# 分享报告页 Design QA
 
-- Source visual truth: `../各页面/*.png`, `../切图/综合评估内容.png`, and the implemented mini-program detail page.
-- Implementation screenshot: `qa-detail-mobile.png`
-- Viewport: 393 × 852 CSS px
-- Source density: 1125 × 2445 screenshots normalized responsively to 393 px width.
-- Implementation density: deviceScaleFactor 1.
-- State: report shortcut → comprehensive report → item detail report.
+- Source visual truth: `/var/folders/zp/c01r2869591dkw_dy11dmfk40000gn/T/codex-clipboard-48450855-eef3-4200-84e2-bd6dcae12ab6.png`
+- Authoritative structure and measurements: `/Users/yusiqi/Documents/东软睿新/miniprogram/pages/guide/index.wxml` (`currentStep == 40`) and `/Users/yusiqi/Documents/东软睿新/miniprogram/pages/guide/index.wxss` (`Item detail report`)
+- Implementation screenshot: `/Users/yusiqi/Documents/东软睿新/assessment-h5-demo/implementation-share-report-final.png`
+- Combined comparison: `/Users/yusiqi/Documents/东软睿新/assessment-h5-demo/share-report-comparison.png`
+- State: 分享报告页顶部；底部固定操作区另行滚动验证
+- Browser viewport: 1200 × 1000 CSS px
+- Phone shell: 393 × 852 CSS px, device scale factor 1
+- Source screenshot: 770 × 1434 px; normalized to 393 px width for comparison
 
 ## Full-view comparison evidence
 
-The screenshot-backed assessment screens use the original 1125 × 2445 source exports without visual reconstruction. The item detail report was rendered at the target mobile viewport and checked for typography, card spacing, ability colors, score markers, long-page scrolling, and fixed bottom controls.
+H5 页面已按小程序 `rpx` 相对 750 设计宽度同比换算。顶部导航、用户信息、白色报告卡、四组能力卡、单项测试详情、总体分析、保存按钮及底部固定操作区均使用小程序源码中的结构、文案、资源和色值。
 
-## Focused-region evidence
+旧截图未包含小程序顶部导航；本次以开发者工具代码为最高优先级，恢复了源码中的导航区域和返回操作。
 
-- Welcome dialog: source artwork, title hierarchy, two clear entry actions.
-- Guided screens: source screenshot stays sharp and fills the mobile viewport.
-- Audio: the second screen loads and plays `notice-speech.mp3` after the user unlocks audio.
-- Item detail: ability cards and the first test card remain readable above the fixed actions.
-- Fixed actions: no overlap with the report scroll area.
+## Focused region evidence
 
-## Findings
-
-- No actionable P0/P1/P2 layout issues remain in the checked viewport.
-- Browser autoplay still requires the initial explicit user click, which is expected platform behavior.
-- Video playback is intentionally omitted from this demo.
+- 八项能力总览：逐项检查 4 个图标、8 个名称、分数、等级及四色刻度，内容与源码一致。
+- 报告底部：滚动至最后一张测试卡和总体分析，确认报告内“保存报告”可见，固定操作区未遮挡内容。
+- 底部操作区：顶部间距 18.86 px、底部安全间距 16 px、按钮高度 64.97 px，与小程序 `36rpx / safe-area / 124rpx` 的比例一致。
+- 交互：保存报告、查看运动处方、返回按钮均可操作；浏览器控制台无错误。
 
 ## Comparison history
 
-1. Initial preview exposed a static hosting path mismatch for assets and a hidden overlay still receiving layout.
-2. Assets were moved to root-relative static folders and `[hidden]` handling was added.
-3. Post-fix verification confirmed original screenshot loading, active narration, report shortcut navigation, and the real item-detail view.
-4. The second and third test tabs were separated, then the second-to-third transition and backward tab switch were verified in the browser.
-5. Countdown styling was centralized and visually checked against the supplied masked countdown reference.
+1. P2：桌面 H5 环境的 `safe-area-inset-bottom` 为 0，导致底部按钮贴近白色区域底边。
+   - Fix：为桌面演示补充最小 16 px 安全区，同时保留真机 `env(safe-area-inset-bottom)`。
+   - Post-fix evidence：底部间距恢复为 16 px，顶部间距为 18.86 px，视觉居中。
+2. P2：按钮点击后浏览器默认焦点描边与小程序不一致。
+   - Fix：固定操作区按钮移除浏览器默认 outline，保留按钮自身绿色边框。
+   - Post-fix evidence：最终截图中按钮边框与小程序色值一致。
 
-## Interaction checks
+## Required fidelity surfaces
 
-- Start voice experience
-- Next and previous screen
-- Eight-item test tab navigation with active and completed states
-- The second test has an independent 30-second chair-stand view and can be switched to from any test without refreshing
-- Result-selection screens respond across the illustrated choice area
-- Keyboard navigation: previous, next, and direct test switching
-- Voice on/off
-- Introductory narration plays only from its dedicated read control
-- Automatic narration is limited to countdown, test start, timed prompts, and selected result prompts
-- Basic-information gender, number steppers, and exercise-habit controls visibly update
-- Five-second countdown number changes on screen while its matching number audio plays
-- Every timed-test countdown uses the same full-screen pure-black 54% dim layer with the centered light countdown panel above it
-- Countdown screens contain no rectangular light panel; only the 54% black mask and live circular counter are added over the source screen
-- All countdowns use the preceding test demonstration screen as their background, including the grip-test video screen for test one
-- The live countdown circle is exactly 196 × 196 CSS pt at the 1× design scale, so no exported static circle remains visible
-- Tests five and six retain the supplied source-page layout while only the timer digits are replaced by live values
-- The two-minute remaining-time speech bubble is no longer covered or clipped by the live timer layer
-- The longest-voice test preserves the supplied voice illustration and uses a live upward stopwatch with its original end-button placement
-- The report-generation screen has a rotating circular progress overlay aligned over the exported static ring
-- Tests seven and eight use the mini-program's original four image options, selectable radio states, submit validation, and recorded feedback
-- The two-minute step test begins at 02:00, counts down for 110 seconds, then enters the original final-10-second state
-- The completed step count supports visible minus/plus changes, clamps to a safe range, and submits into the next test
-- Ability-group names use the intended two-line labels on a narrower colored panel; metric names, scores, and level descriptions stay on one line
-- The fixed report actions have a continuous white backing with no exposed dark rounded corners above the footer
-- Every single-test grade badge uses semantic paired colors: green for 优/良, amber for 中, and red for 差/待提升, including both text and tinted background
-- The fixed report footer is 126 pt tall at the 1× design scale, with 32 pt above and below the 62 pt buttons so the action row is vertically centered in its white backing
-- All seven example-video pages replace expanded instructions with the same compact prompt and a visual-only “播放语音讲解” control; no audio is attached yet
-- At the report scroll endpoint, the content-to-action spacing is reduced to match the 32 pt space below the fixed buttons
-- The compact video prompt, ready label, and start button are now one reflowed overlay below each video, eliminating the oversized blank gap and preventing the prompt from covering the video
-- The eight clean no-bubble exports are now the actual demo-page backgrounds; the supplied transparent bubble PNG is placed once at its measured position with no CSS recreation or masking of video content
-- The shared bubble asset is offset an additional 20 pt below every example video, leaving a visible breathing gap between the video edge and green dot
-- The grip-timing page uses the supplied clean background, a live upward timer, and the two supplied prompt PNGs; prompt one slides up at 1 second and prompt two replaces it with a fresh slide-up at 2 seconds
-- Stopwatch and fixed-duration test displays update from real elapsed time
-- Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
-- Elapsed-time test completion buttons advance to their result screens
-- Countdown voice scheduling
-- Five-second countdown auto-advance
-- Recorded-result and report-generation auto-advance
-- Direct step access and refresh recovery through the URL hash
-- Image loading and failure feedback
-- Direct report shortcut
-- Comprehensive report to item detail
-- Detail report scrolling
-- Save report feedback
-- Prescription feedback
+- Fonts and typography: 使用小程序相同的系统字体栈、字号比例、字重和行高；通过。
+- Spacing and layout rhythm: 使用小程序源码的 rpx 比例；顶部、卡片、滚动区和底部安全区通过。
+- Colors and visual tokens: `#F3F9F6`、`#5FCC8C`、`#13F794` 及等级色与源码一致；通过。
+- Image quality and asset fidelity: 头像、四项能力图标和返回图标均直接复用微信小程序素材；通过。
+- Copy and content: 用户信息、8 项能力、8 张测试卡、总体分析和按钮文案与源码一致；通过。
 
-## Console
+## Primary interactions tested
 
-No application console errors were observed during the verified local flow.
-
-The two-minute stepping intro and pre-countdown states overlay the supplied video component in its original 16:9 slot. The report footer uses equal 24px top and bottom padding. The second grip prompt waits for the first narration to finish, pauses for one second, then slides in and plays.
+- 从综合评估结果进入分享报告页
+- 保存报告提示
+- 查看运动处方提示
+- 报告滚动及底部固定操作区
 
 final result: passed
