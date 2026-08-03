@@ -24,7 +24,7 @@ const screens = [
   { image: "单腿站立测试完成.png" },
   { image: "计时走测试.png" },
   { image: "计时走测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
-  { image: "计时走测试中.png", timer: "up", autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:1400, audio:"test-six-timer-speech.mp3" }] },
+  { image: "计时走测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "计时走测试完成.png" },
   { image: "坐位体前屈测试.png", manualAudio: "test-seven-intro-speech.mp3", speechY: 420 },
   { image: "坐位体前屈测试中.png", manualAudio: "test-seven-timer-speech.mp3", autoAudio: "test-seven-timer-speech.mp3", speechY: 420 },
@@ -97,12 +97,15 @@ const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
 const compactDemoCaption = document.querySelector("#compactDemoCaption");
 const gripPrompt = document.querySelector("#gripPrompt");
+const timerTestPrompt = document.querySelector("#timerTestPrompt");
 const testVideoOverlay = document.querySelector("#testVideoOverlay");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
-const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
+const reportDetailHotspot = document.querySelector("#reportDetailHotspot");
+const nextButton = document.querySelector("#nextButton");
+const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 9, 10, 15, 19, 23, 27, 28, 31, 32, 35]);
 
 testTabs.innerHTML = testStarts.map((_, tabIndex) =>
   `<button type="button" data-test-tab="${tabIndex}" aria-label="切换到第${tabIndex + 1}项测试"><span>${tabIndex + 1}</span></button>`
@@ -210,17 +213,32 @@ function renderScreen() {
       countdownTimers.push(secondPromptFallback);
     }, 1000));
   }
-  testVideoOverlay.hidden = ![10, 11].includes(index);
+  const timerPromptConfig = index === 21
+    ? ["单腿站立提示气泡.png", "test-five-timer-speech.mp3"]
+    : index === 25
+      ? ["计时走测试中提示气泡.png", "test-six-timer-speech.mp3"]
+      : null;
+  timerTestPrompt.hidden = !timerPromptConfig;
+  timerTestPrompt.classList.remove("show");
+  if (timerPromptConfig) {
+    timerTestPrompt.querySelector("img").src = `./assets/${timerPromptConfig[0]}`;
+    countdownTimers.push(setTimeout(() => {
+      if (![21, 25].includes(index)) return;
+      timerTestPrompt.classList.add("show");
+      playAudio(timerPromptConfig[1]);
+    }, 1000));
+  }
+  testVideoOverlay.hidden = !([10, 11].includes(index) && selectedTestTab !== 1);
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
   repsValue.textContent = stepRepetitions;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
+  reportDetailHotspot.hidden = !screen.report;
+  nextButton.hidden = Boolean(screen.report);
+  stage.classList.toggle("report-mode", Boolean(screen.report));
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
-    primaryActionHotspot.style.bottom = "auto";
-  } else if ([8, 21, 25].includes(index)) {
-    primaryActionHotspot.style.top = "59%";
     primaryActionHotspot.style.bottom = "auto";
   } else {
     primaryActionHotspot.style.top = "auto";
@@ -237,6 +255,9 @@ function renderScreen() {
     displayImage = compactDemoImages.get(backgroundIndex);
   }
   if (index === 8) displayImage = "计时页-握力测试无计时器气泡.png";
+  if (index === 12 && selectedTestTab === 1) displayImage = "计时页-30秒坐站测试.png";
+  if (index === 21) displayImage = "计时页-单腿站立测试中.png";
+  if (index === 25) displayImage = "计时页-计时走测试中.png";
   image.src = assetPath("screens", displayImage);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {
@@ -249,11 +270,19 @@ function renderScreen() {
   } else {
     dynamicTestPanel.classList.remove("countdown");
     scheduleScreenAudio(screen);
-    startLiveTimer(screen.timer);
+    startLiveTimer(index === 12 && selectedTestTab === 1 ? "down30" : screen.timer);
   }
-  if (screen.autoNext) {
-    showFlowStatus(screen.countdown ? "倒计时结束后自动开始" : "正在自动记录…", Math.min(screen.autoNext - 200, 1800));
-    flowTimer = setTimeout(() => next(true), screen.autoNext);
+  const autoNextDelay = index === 12 && selectedTestTab === 1 ? 30000 : screen.autoNext;
+  if (autoNextDelay) {
+    showFlowStatus(screen.countdown ? "倒计时结束后自动开始" : "正在自动记录…", Math.min(autoNextDelay - 200, 1800));
+    flowTimer = setTimeout(() => {
+      if (index === 12 && selectedTestTab === 1) {
+        index = 14;
+        renderScreen();
+      } else {
+        next(true);
+      }
+    }, autoNextDelay);
   }
   history.replaceState(null, "", `#step=${index + 1}`);
 }
@@ -323,7 +352,13 @@ function next(fromAuto = false) {
     showFlowStatus("此页面将自动进入下一步");
     return;
   }
-  if (screens[index].report) return showDetail();
+  if (screens[index].report) return;
+  if (index === 9) {
+    selectedTestTab = 1;
+    index = 10;
+    renderScreen();
+    return;
+  }
   if (selectedTestTab === 1 && index === 14) {
     selectedTestTab = 2;
     index = testStarts[2];
@@ -360,9 +395,10 @@ function toast(message) {
 }
 
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
-document.querySelector("#nextButton").addEventListener("click", next);
+nextButton.addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
 primaryActionHotspot.addEventListener("click", next);
+reportDetailHotspot.addEventListener("click", showDetail);
 dynamicComplete.addEventListener("click", () => next(true));
 document.querySelector("#chairStartButton").addEventListener("click", () => {
   index = 11;
