@@ -51,6 +51,9 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - All countdowns use the preceding test demonstration screen as their background, including the grip-test video screen for test one
 - The live countdown circle is exactly 196 × 196 CSS pt at the 1× design scale, so no exported static circle remains visible
 - Tests five and six retain the supplied source-page layout while only the timer digits are replaced by live values
+- The two-minute remaining-time speech bubble is no longer covered or clipped by the live timer layer
+- The longest-voice test preserves the supplied voice illustration and uses a live upward stopwatch with its original end-button placement
+- The report-generation screen has a rotating circular progress overlay aligned over the exported static ring
 - Tests seven and eight use the mini-program's original four image options, selectable radio states, submit validation, and recorded feedback
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
