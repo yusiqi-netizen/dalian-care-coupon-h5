@@ -68,6 +68,7 @@ let flowTimer = null;
 let selectedTestTab = null;
 let liveTimer = null;
 const resultChoices = { 29: 0, 33: 0 };
+const compactDemoScreens = new Map([[6,420],[10,390],[15,390],[19,390],[23,390],[27,390],[31,390]]);
 let stepRepetitions = 45;
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
@@ -86,6 +87,7 @@ const dynamicTestPanel = document.querySelector("#dynamicTestPanel");
 const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
+const compactDemoCaption = document.querySelector("#compactDemoCaption");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
@@ -170,6 +172,8 @@ function renderScreen() {
   chairTestView.hidden = !chairMode;
   chairTestView.classList.toggle("background-only", chairMode && index !== 10);
   renderResultChoice();
+  compactDemoCaption.hidden = !compactDemoScreens.has(index);
+  if (compactDemoScreens.has(index)) compactDemoCaption.style.setProperty("--caption-y", `${compactDemoScreens.get(index)}px`);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
   repsValue.textContent = stepRepetitions;
@@ -184,7 +188,7 @@ function renderScreen() {
     primaryActionHotspot.style.top = "auto";
     primaryActionHotspot.style.bottom = "104px";
   }
-  speechHotspot.hidden = !screen.manualAudio;
+  speechHotspot.hidden = !screen.manualAudio || compactDemoScreens.has(index);
   if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
   const displayImage = screen.countdown ? screens[index - 1].image : screen.image;
