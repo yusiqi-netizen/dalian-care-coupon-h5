@@ -17,7 +17,7 @@ const screens = [
   { image: "最长发声时间测试.png", manualAudio: "test-three-intro-speech.mp3", speechY: 420 },
   { image: "最长发声时间测试倒计时 5 秒.png", countdown: true, autoNext: 5000 },
   { image: "最长发声时间测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
-  { image: "发声测试完成.png", delayedAudio: [{ after:1000, audio:"test-three-result-speech.mp3" }] },
+  { image: "发声测试完成.png" },
   { image: "单腿站立测试.png", manualAudio: "test-four-intro-speech.mp3", speechY: 420 },
   { image: "单腿站立测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
   { image: "单腿站立测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
