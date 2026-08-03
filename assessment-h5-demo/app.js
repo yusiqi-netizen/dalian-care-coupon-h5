@@ -67,6 +67,7 @@ let countdownTimers = [];
 let flowTimer = null;
 let selectedTestTab = null;
 let liveTimer = null;
+const resultChoices = { 29: 0, 33: 0 };
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
 const image = document.querySelector("#screenImage");
@@ -83,6 +84,7 @@ const liveTime = document.querySelector("#liveTime");
 const dynamicTestPanel = document.querySelector("#dynamicTestPanel");
 const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
+const resultChoiceView = document.querySelector("#resultChoiceView");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
@@ -128,6 +130,7 @@ function startLiveTimer(mode) {
   if (!mode) return;
   dynamicTestPanel.hidden = false;
   dynamicTestPanel.classList.remove("countdown");
+  dynamicTestPanel.classList.toggle("precise-timer", index === 21 || index === 25);
   const startedAt = Date.now();
   const duration = mode === "down30" ? 30 : mode === "down10" ? 10 : mode === "down120" ? 120 : null;
   const update = () => {
@@ -160,6 +163,7 @@ function renderScreen() {
   const chairMode = selectedTestTab === 1 && index >= 10 && index < 15;
   chairTestView.hidden = !chairMode;
   chairTestView.classList.toggle("background-only", chairMode && index !== 10);
+  renderResultChoice();
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
@@ -179,6 +183,7 @@ function renderScreen() {
   if (screen.countdown) {
     dynamicTestPanel.hidden = false;
     dynamicTestPanel.classList.add("countdown");
+    dynamicTestPanel.classList.remove("precise-timer");
     liveTime.textContent = "5";
     playCountdown();
   } else {
@@ -191,6 +196,23 @@ function renderScreen() {
     flowTimer = setTimeout(() => next(true), screen.autoNext);
   }
   history.replaceState(null, "", `#step=${index + 1}`);
+}
+function renderResultChoice() {
+  const isFlex = index === 29;
+  const isShoulder = index === 33;
+  resultChoiceView.hidden = !isFlex && !isShoulder;
+  if (!isFlex && !isShoulder) return;
+  const options = isFlex
+    ? ["手离脚尖还有较远距离", "手快碰到脚尖", "手指能碰到脚尖", "手指超过脚尖"]
+    : ["", "", "", ""];
+  const prefix = isFlex ? "flex" : "shoulder";
+  const cards = options.map((label, optionIndex) => {
+    const value = optionIndex + 1;
+    const selected = value === resultChoices[index];
+    return `<button type="button" class="result-choice-card ${selected ? "selected" : ""}" data-choice="${value}" aria-label="选择第 ${value} 张图片" aria-pressed="${selected}"><img class="choice-image" src="./assets/${prefix}-choice-${value}.jpg" alt="${label || `肩屈曲动作 ${value}`}"><img class="choice-radio-image" src="./assets/${prefix}-radio-${selected ? "selected" : "default"}.png" alt="">${isFlex ? `<span>${label}</span>` : ""}</button>`;
+  }).join("");
+  resultChoiceView.className = `result-choice-view ${isFlex ? "flex-choice" : "shoulder-choice"}`;
+  resultChoiceView.innerHTML = `<div class="${isFlex ? "result-choice-grid" : "shoulder-choice-grid"}">${cards}</div><button type="button" class="result-choice-submit" data-choice-submit>提交</button>`;
 }
 function currentTestIndex() {
   if (selectedTestTab === 1 && index >= 10 && index < 15) return 1;
@@ -308,6 +330,21 @@ image.addEventListener("click", () => {
 testTabs.addEventListener("click", event => {
   const button = event.target.closest("[data-test-tab]");
   if (button) jumpToTest(Number(button.dataset.testTab));
+});
+resultChoiceView.addEventListener("click", event => {
+  const choice = event.target.closest("[data-choice]");
+  if (choice) {
+    resultChoices[index] = Number(choice.dataset.choice);
+    renderResultChoice();
+    return;
+  }
+  if (!event.target.closest("[data-choice-submit]")) return;
+  if (!resultChoices[index]) {
+    toast("请先选择一张图片");
+    return;
+  }
+  resultChoices[index] = 0;
+  next();
 });
 formHotspots.addEventListener("click", event => {
   const control = event.target.closest("[data-form]");
