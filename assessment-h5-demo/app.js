@@ -178,7 +178,8 @@ function renderScreen() {
   speechHotspot.hidden = !screen.manualAudio;
   if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
-  image.src = assetPath("screens", screen.image);
+  const displayImage = screen.countdown ? screens[index - 1].image : screen.image;
+  image.src = assetPath("screens", displayImage);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {
     dynamicTestPanel.hidden = false;
