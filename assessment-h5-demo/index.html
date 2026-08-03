@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260803-4">
+  <link rel="stylesheet" href="./style.css?v=20260803-5">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -23,6 +23,12 @@
         <button id="chairStartButton">开始测试</button>
       </section>
       <section class="result-choice-view" id="resultChoiceView" hidden></section>
+      <section class="reps-control" id="repsControl" hidden>
+        <button type="button" data-reps-delta="-1" aria-label="踏步次数减一"></button>
+        <output id="repsValue" aria-live="polite">45</output>
+        <button type="button" data-reps-delta="1" aria-label="踏步次数加一"></button>
+        <button type="button" class="reps-submit" data-reps-submit aria-label="提交踏步次数"></button>
+      </section>
       <div class="loading-ring-overlay" id="loadingRingOverlay" hidden><span>生成中</span></div>
       <div class="form-hotspots" id="formHotspots" hidden>
         <section class="form-card">
@@ -91,6 +97,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260803-4"></script>
+  <script src="./app.js?v=20260803-5"></script>
 </body>
 </html>
