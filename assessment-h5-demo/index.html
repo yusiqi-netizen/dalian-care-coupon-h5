@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260803-9">
+  <link rel="stylesheet" href="./style.css?v=20260803-10">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -24,10 +24,9 @@
       </section>
       <section class="result-choice-view" id="resultChoiceView" hidden></section>
       <section class="compact-demo-caption" id="compactDemoCaption" hidden>
-        <span aria-hidden="true"></span>
-        <p class="caption-copy">请观看示例视频，或点击<br><button class="caption-link" type="button">播放语音讲解</button></p>
-        <div class="compact-ready">我准备好了 <b>↓↓↓</b></div>
-        <button class="compact-start" type="button">开始测试</button>
+        <button class="caption-image-button" type="button" aria-label="播放语音讲解（功能待完善）">
+          <img src="./assets/播放语音提示气泡.png" alt="请观看示例视频，或点击播放语音讲解">
+        </button>
       </section>
       <section class="reps-control" id="repsControl" hidden>
         <button type="button" data-reps-delta="-1" aria-label="踏步次数减一"></button>
@@ -103,6 +102,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260803-9"></script>
+  <script src="./app.js?v=20260803-10"></script>
 </body>
 </html>
