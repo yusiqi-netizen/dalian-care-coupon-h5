@@ -65,7 +65,8 @@ let index = 0;
 let voiceEnabled = true;
 let countdownTimers = [];
 let flowTimer = null;
-let selectedTestTab = null;
+const savedTestTab = sessionStorage.getItem("assessmentSelectedTestTab");
+let selectedTestTab = savedTestTab === null ? null : Number(savedTestTab);
 let liveTimer = null;
 const resultChoices = { 29: 0, 33: 0 };
 const compactDemoScreens = new Set([6,10,15,19,23,27,31]);
@@ -113,6 +114,11 @@ testTabs.innerHTML = testStarts.map((_, tabIndex) =>
 ).join("");
 
 function assetPath(folder, name) { return `./${folder}/${encodeURIComponent(name)}`; }
+function selectTestTab(tabIndex) {
+  selectedTestTab = tabIndex;
+  if (tabIndex === null) sessionStorage.removeItem("assessmentSelectedTestTab");
+  else sessionStorage.setItem("assessmentSelectedTestTab", String(tabIndex));
+}
 function clearFlowTimers() {
   countdownTimers.forEach(clearTimeout);
   countdownTimers = [];
@@ -328,7 +334,7 @@ function jumpToTest(tabIndex) {
   clearFlowTimers();
   stopAudio();
   index = target;
-  selectedTestTab = tabIndex;
+  selectTestTab(tabIndex);
   renderScreen();
   showFlowStatus(`已切换到第 ${tabIndex + 1} 项测试`);
 }
@@ -357,13 +363,13 @@ function next(fromAuto = false) {
   }
   if (screens[index].report) return;
   if (index === 9) {
-    selectedTestTab = 1;
+    selectTestTab(1);
     index = 10;
     renderScreen();
     return;
   }
   if (selectedTestTab === 1 && index === 14) {
-    selectedTestTab = 2;
+    selectTestTab(2);
     index = testStarts[2];
     renderScreen();
     return;
