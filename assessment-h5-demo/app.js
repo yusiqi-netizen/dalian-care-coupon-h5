@@ -11,9 +11,9 @@ const screens = [
   { image: "完成.png" },
   { image: "2分钟踏步测试.png", manualAudio: "test-two-intro-speech.mp3", speechY: 420 },
   { image: "2分钟踏步测试前倒计时五秒.png", countdown: true, autoNext: 5000 },
-  { image: "2分钟踏步测试中.png", timer: "down120", autoNext: 110000, autoAudio: "test-start-speech.mp3", delayedAudio: [{ after:2000, audio:"test-two-timer-speech.mp3" }] },
-  { image: "2分钟踏步测试剩 10 秒.png", timer: "down10", autoNext: 10000, autoAudio: "test-two-ten-speech.mp3" },
-  { image: "2分钟踏步测试完成.png", delayedAudio: [{ after:1000, audio:"test-two-result-speech.mp3" }] },
+  { image: "2分钟踏步测试中.png", timer: "down120", autoNext: 110000, autoAudio: "test-start-speech.mp3" },
+  { image: "2分钟踏步测试剩 10 秒.png", timer: "down10", autoNext: 10000, autoAudio: "test-three-ten-speech.mp3" },
+  { image: "2分钟踏步测试完成.png" },
   { image: "最长发声时间测试.png", manualAudio: "test-three-intro-speech.mp3", speechY: 420 },
   { image: "最长发声时间测试倒计时 5 秒.png", countdown: true, autoNext: 5000 },
   { image: "最长发声时间测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
@@ -148,7 +148,7 @@ function playCountdown() {
   [5,4,3,2,1].forEach((number, i) => {
     countdownTimers.push(setTimeout(() => {
       liveTime.textContent = number;
-      narration.src = assetPath("audio", `countdown-${number}.mp3`);
+      narration.src = assetPath("audio", `countdown-${number}.wav`);
       narration.play().catch(() => {});
     }, i * 1000));
   });
@@ -279,6 +279,20 @@ function renderScreen() {
   } else {
     dynamicTestPanel.classList.remove("countdown");
     scheduleScreenAudio(screen);
+    if (index === 12 && selectedTestTab === 1) {
+      countdownTimers.push(setTimeout(() => {
+        if (index === 12 && selectedTestTab === 1) playAudio("test-two-timer-speech.mp3");
+      }, 2000));
+      countdownTimers.push(setTimeout(() => {
+        if (index === 12 && selectedTestTab === 1) playAudio("test-two-ten-speech.mp3");
+      }, 20000));
+    }
+    if (index === 14) {
+      const resultAudio = selectedTestTab === 1 ? "test-two-result-speech.mp3" : "test-three-result-speech.mp3";
+      countdownTimers.push(setTimeout(() => {
+        if (index === 14) playAudio(resultAudio);
+      }, 1000));
+    }
     if (index === 32) {
       narration.onended = () => {
         narration.onended = null;
