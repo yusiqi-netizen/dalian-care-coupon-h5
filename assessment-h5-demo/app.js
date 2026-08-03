@@ -68,7 +68,15 @@ let flowTimer = null;
 let selectedTestTab = null;
 let liveTimer = null;
 const resultChoices = { 29: 0, 33: 0 };
-const compactDemoScreens = new Map([[6,420],[10,390],[15,390],[19,390],[23,390],[27,390],[31,390]]);
+const compactDemoScreens = new Set([6,10,15,19,23,27,31]);
+const compactDemoImages = new Map([
+  [6,"示例页-握力测试.png"],
+  [15,"示例页-最长发声时间测试.png"],
+  [19,"示例页-单腿站立测试.png"],
+  [23,"示例页-计时走测试.png"],
+  [27,"示例页-坐位体前屈测试.png"],
+  [31,"示例页-肩屈曲测试.png"]
+]);
 let stepRepetitions = 45;
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
@@ -168,16 +176,13 @@ function renderScreen() {
   const screen = screens[index];
   renderTestTabs();
   formHotspots.hidden = index !== 4;
-  const chairMode = selectedTestTab === 1 && index >= 10 && index < 15;
-  chairTestView.hidden = !chairMode;
-  chairTestView.classList.toggle("background-only", chairMode && index !== 10);
+  chairTestView.hidden = true;
   renderResultChoice();
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
-  if (compactDemoScreens.has(index)) compactDemoCaption.style.setProperty("--caption-y", `${compactDemoScreens.get(index)}px`);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
   repsValue.textContent = stepRepetitions;
-  primaryActionHotspot.hidden = !primaryActionScreens.has(index) || compactDemoScreens.has(index);
+  primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
     primaryActionHotspot.style.bottom = "auto";
@@ -191,7 +196,13 @@ function renderScreen() {
   speechHotspot.hidden = !screen.manualAudio || compactDemoScreens.has(index);
   if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
   image.classList.add("is-loading");
-  const displayImage = screen.countdown ? screens[index - 1].image : screen.image;
+  const backgroundIndex = screen.countdown ? index - 1 : index;
+  let displayImage = screen.countdown ? screens[index - 1].image : screen.image;
+  if (backgroundIndex === 10) {
+    displayImage = selectedTestTab === 1 ? "示例页-30秒坐站测试.png" : "示例页-2分钟踏步测试.png";
+  } else if (compactDemoImages.has(backgroundIndex)) {
+    displayImage = compactDemoImages.get(backgroundIndex);
+  }
   image.src = assetPath("screens", displayImage);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {
@@ -360,9 +371,6 @@ resultChoiceView.addEventListener("click", event => {
   }
   resultChoices[index] = 0;
   next();
-});
-compactDemoCaption.addEventListener("click", event => {
-  if (event.target.closest(".compact-start")) next();
 });
 repsControl.addEventListener("click", event => {
   const deltaButton = event.target.closest("[data-reps-delta]");
