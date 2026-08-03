@@ -31,7 +31,7 @@ const screens = [
   { image: "坐位体前屈测试结果选择.png" },
   { image: "坐位体前屈测试结果已记录.png", autoNext: 1600 },
   { image: "肩屈曲测试.png", manualAudio: "test-eight-intro-speech.mp3", speechY: 420 },
-  { image: "肩屈曲测试中.png", autoAudio: "test-eight-first-speech.mp3", delayedAudio: [{ after:5200, audio:"test-eight-second-speech.mp3" }] },
+  { image: "肩屈曲测试中.png", autoAudio: "test-eight-first-speech.mp3" },
   { image: "肩屈曲测试选择结果.png" },
   { image: "肩屈曲测试结果记录.png", autoNext: 1600 },
   { image: "获取报告.png" },
@@ -279,6 +279,14 @@ function renderScreen() {
   } else {
     dynamicTestPanel.classList.remove("countdown");
     scheduleScreenAudio(screen);
+    if (index === 32) {
+      narration.onended = () => {
+        narration.onended = null;
+        countdownTimers.push(setTimeout(() => {
+          if (index === 32) playAudio("test-eight-second-speech.mp3");
+        }, 1000));
+      };
+    }
     startLiveTimer(index === 12 && selectedTestTab === 1 ? "down30" : screen.timer);
   }
   const autoNextDelay = index === 12 && selectedTestTab === 1 ? 30000 : screen.autoNext;
