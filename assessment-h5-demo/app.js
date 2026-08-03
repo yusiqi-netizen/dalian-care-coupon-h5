@@ -96,6 +96,7 @@ const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
 const compactDemoCaption = document.querySelector("#compactDemoCaption");
+const gripPrompt = document.querySelector("#gripPrompt");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
@@ -147,6 +148,7 @@ function startLiveTimer(mode) {
   dynamicTestPanel.classList.toggle("precise-timer", [12, 13, 17, 21, 25].includes(index));
   dynamicTestPanel.classList.toggle("lower-timer", [12, 13, 17].includes(index));
   dynamicTestPanel.classList.toggle("fixed-timer", index === 12 || index === 13);
+  dynamicTestPanel.classList.toggle("grip-timer", index === 8);
   const startedAt = Date.now();
   const duration = mode === "down30" ? 30 : mode === "down10" ? 10 : mode === "down120" ? 120 : null;
   const update = () => {
@@ -178,6 +180,18 @@ function renderScreen() {
   formHotspots.hidden = index !== 4;
   chairTestView.hidden = true;
   renderResultChoice();
+  gripPrompt.hidden = index !== 8;
+  gripPrompt.classList.remove("show", "second");
+  if (index === 8) {
+    gripPrompt.querySelector("img").src = "./assets/请尽力保持这个姿势气泡.png";
+    countdownTimers.push(setTimeout(() => gripPrompt.classList.add("show"), 1000));
+    countdownTimers.push(setTimeout(() => {
+      gripPrompt.classList.remove("show");
+      gripPrompt.classList.add("second");
+      gripPrompt.querySelector("img").src = "./assets/无法继续时提示气泡.png";
+      countdownTimers.push(setTimeout(() => gripPrompt.classList.add("show"), 40));
+    }, 2000));
+  }
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
@@ -203,6 +217,7 @@ function renderScreen() {
   } else if (compactDemoImages.has(backgroundIndex)) {
     displayImage = compactDemoImages.get(backgroundIndex);
   }
+  if (index === 8) displayImage = "计时页-握力测试无计时器气泡.png";
   image.src = assetPath("screens", displayImage);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {

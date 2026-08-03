@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260803-11">
+  <link rel="stylesheet" href="./style.css?v=20260803-12">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -28,6 +28,9 @@
           <img src="./assets/播放语音提示气泡.png" alt="请观看示例视频，或点击播放语音讲解">
         </button>
       </section>
+      <div class="grip-prompt" id="gripPrompt" hidden>
+        <img src="./assets/请尽力保持这个姿势气泡.png" alt="请尽力保持这个姿势">
+      </div>
       <section class="reps-control" id="repsControl" hidden>
         <button type="button" data-reps-delta="-1" aria-label="踏步次数减一"></button>
         <output id="repsValue" aria-live="polite">45</output>
@@ -102,6 +105,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260803-11"></script>
+  <script src="./app.js?v=20260803-12"></script>
 </body>
 </html>
