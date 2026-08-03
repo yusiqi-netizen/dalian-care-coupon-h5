@@ -65,6 +65,7 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - At the report scroll endpoint, the content-to-action spacing is reduced to match the 32 pt space below the fixed buttons
 - The compact video prompt, ready label, and start button are now one reflowed overlay below each video, eliminating the oversized blank gap and preventing the prompt from covering the video
 - The eight clean no-bubble exports are now the actual demo-page backgrounds; the supplied transparent bubble PNG is placed once at its measured position with no CSS recreation or masking of video content
+- The shared bubble asset is offset an additional 20 pt below every example video, leaving a visible breathing gap between the video edge and green dot
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
 - Elapsed-time test completion buttons advance to their result screens
