@@ -59,6 +59,7 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - The completed step count supports visible minus/plus changes, clamps to a safe range, and submits into the next test
 - Ability-group names use the intended two-line labels on a narrower colored panel; metric names, scores, and level descriptions stay on one line
 - The fixed report actions have a continuous white backing with no exposed dark rounded corners above the footer
+- Every single-test grade badge uses semantic paired colors: green for 优/良, amber for 中, and red for 差/待提升, including both text and tinted background
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
 - Elapsed-time test completion buttons advance to their result screens
