@@ -48,6 +48,8 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - Five-second countdown number changes on screen while its matching number audio plays
 - Every timed-test countdown uses the same full-screen pure-black 54% dim layer with the centered light countdown panel above it
 - Countdown screens contain no rectangular light panel; only the 54% black mask and live circular counter are added over the source screen
+- All countdowns use the preceding test demonstration screen as their background, including the grip-test video screen for test one
+- The live countdown circle is exactly 196 × 196 CSS pt at the 1× design scale, so no exported static circle remains visible
 - Tests five and six retain the supplied source-page layout while only the timer digits are replaced by live values
 - Tests seven and eight use the mini-program's original four image options, selectable radio states, submit validation, and recorded feedback
 - Stopwatch and fixed-duration test displays update from real elapsed time
