@@ -78,6 +78,7 @@ const compactDemoImages = new Map([
   [31,"示例页-肩屈曲测试.png"]
 ]);
 let stepRepetitions = 45;
+let chairRepetitions = 6;
 const formData = { gender: "男", age: 59, height: 170, weight: 65, habit: "几乎不运动" };
 const stage = document.querySelector("#screenStage");
 const image = document.querySelector("#screenImage");
@@ -232,11 +233,12 @@ function renderScreen() {
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
   repsControl.hidden = index !== 14;
-  repsValue.textContent = stepRepetitions;
+  repsValue.textContent = selectedTestTab === 1 ? chairRepetitions : stepRepetitions;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   reportDetailHotspot.hidden = !screen.report;
   nextButton.hidden = Boolean(screen.report);
   stage.classList.toggle("report-mode", Boolean(screen.report));
+  stage.classList.toggle("chair-timer-active", index === 12 && selectedTestTab === 1);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
     primaryActionHotspot.style.bottom = "auto";
@@ -256,6 +258,7 @@ function renderScreen() {
   }
   if (index === 8) displayImage = "计时页-握力测试无计时器气泡.png";
   if (index === 12 && selectedTestTab === 1) displayImage = "计时页-30秒坐站测试.png";
+  if (index === 14 && selectedTestTab === 1) displayImage = "站坐测试完成.png";
   if (index === 21) displayImage = "计时页-单腿站立测试中.png";
   if (index === 25) displayImage = "计时页-计时走测试中.png";
   image.src = assetPath("screens", displayImage);
@@ -445,8 +448,14 @@ resultChoiceView.addEventListener("click", event => {
 repsControl.addEventListener("click", event => {
   const deltaButton = event.target.closest("[data-reps-delta]");
   if (deltaButton) {
-    stepRepetitions = Math.max(0, Math.min(999, stepRepetitions + Number(deltaButton.dataset.repsDelta)));
-    repsValue.textContent = stepRepetitions;
+    const delta = Number(deltaButton.dataset.repsDelta);
+    if (selectedTestTab === 1) {
+      chairRepetitions = Math.max(0, Math.min(99, chairRepetitions + delta));
+      repsValue.textContent = chairRepetitions;
+    } else {
+      stepRepetitions = Math.max(0, Math.min(999, stepRepetitions + delta));
+      repsValue.textContent = stepRepetitions;
+    }
     return;
   }
   if (event.target.closest("[data-reps-submit]")) next();
