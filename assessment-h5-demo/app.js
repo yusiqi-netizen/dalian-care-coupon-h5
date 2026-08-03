@@ -114,6 +114,11 @@ testTabs.innerHTML = testStarts.map((_, tabIndex) =>
 ).join("");
 
 function assetPath(folder, name) { return `./${folder}/${encodeURIComponent(name)}`; }
+const countdownVoicePlayers = new Map([1,2,3,4,5].map(number => {
+  const player = new Audio(assetPath("audio", `countdown-${number}.mp3`));
+  player.preload = "auto";
+  return [number, player];
+}));
 function selectTestTab(tabIndex) {
   selectedTestTab = tabIndex;
   if (tabIndex === null) sessionStorage.removeItem("assessmentSelectedTestTab");
@@ -148,8 +153,10 @@ function playCountdown() {
   [5,4,3,2,1].forEach((number, i) => {
     countdownTimers.push(setTimeout(() => {
       liveTime.textContent = number;
-      narration.src = assetPath("audio", `countdown-${number}.wav`);
-      narration.play().catch(() => {});
+      if (!voiceEnabled) return;
+      const player = countdownVoicePlayers.get(number);
+      player.currentTime = 0;
+      player.play().catch(() => {});
     }, i * 1000));
   });
 }
