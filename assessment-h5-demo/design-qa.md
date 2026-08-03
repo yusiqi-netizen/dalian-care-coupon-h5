@@ -66,6 +66,7 @@ The screenshot-backed assessment screens use the original 1125 × 2445 source ex
 - The compact video prompt, ready label, and start button are now one reflowed overlay below each video, eliminating the oversized blank gap and preventing the prompt from covering the video
 - The eight clean no-bubble exports are now the actual demo-page backgrounds; the supplied transparent bubble PNG is placed once at its measured position with no CSS recreation or masking of video content
 - The shared bubble asset is offset an additional 20 pt below every example video, leaving a visible breathing gap between the video edge and green dot
+- The grip-timing page uses the supplied clean background, a live upward timer, and the two supplied prompt PNGs; prompt one slides up at 1 second and prompt two replaces it with a fresh slide-up at 2 seconds
 - Stopwatch and fixed-duration test displays update from real elapsed time
 - Dynamic countdown and timer layers are anchored to the phone screen, with no duplicate static values
 - Elapsed-time test completion buttons advance to their result screens
