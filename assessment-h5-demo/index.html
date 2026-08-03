@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260803-13">
+  <link rel="stylesheet" href="./style.css?v=20260803-14">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -31,6 +31,9 @@
       <img class="test-video-overlay" id="testVideoOverlay" src="./assets/两分钟踏步走视频组件.png" alt="两分钟踏步走示例视频" hidden>
       <div class="grip-prompt" id="gripPrompt" hidden>
         <img src="./assets/请尽力保持这个姿势气泡.png" alt="请尽力保持这个姿势">
+      </div>
+      <div class="timer-test-prompt" id="timerTestPrompt" hidden>
+        <img alt="测试提示">
       </div>
       <section class="reps-control" id="repsControl" hidden>
         <button type="button" data-reps-delta="-1" aria-label="踏步次数减一"></button>
@@ -83,6 +86,7 @@
         <output id="formFeedback" aria-live="polite"></output>
       </div>
       <button class="speech-hotspot" id="speechHotspot" aria-label="播放或暂停当前说明" hidden></button>
+      <button class="report-detail-hotspot" id="reportDetailHotspot" aria-label="查看分项分析" hidden></button>
       <section class="dynamic-test-panel" id="dynamicTestPanel" hidden>
         <div class="dynamic-countdown-label">倒计时 5 秒后开始</div>
         <output class="live-time" id="liveTime" aria-live="polite"></output>
@@ -106,6 +110,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260803-13"></script>
+  <script src="./app.js?v=20260803-14"></script>
 </body>
 </html>
