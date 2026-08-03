@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260731-5">
+  <link rel="stylesheet" href="./style.css?v=20260803-1">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -15,6 +15,13 @@
       <button class="tap-zone tap-next" id="nextButton" aria-label="继续下一步"></button>
       <button class="primary-action-hotspot" id="primaryActionHotspot" aria-label="执行当前页面主操作" hidden></button>
       <nav class="test-tabs" id="testTabs" aria-label="八项测试快速切换" hidden></nav>
+      <section class="chair-test-view" id="chairTestView" hidden>
+        <div class="chair-progress"><b>1</b><i></i><b class="active">2</b><i></i><b>3</b><i></i><b>4</b><i></i><b>5</b><i></i><b>6</b><i></i><b>7</b><i></i><b>8</b></div>
+        <h2>30 秒坐站测试</h2>
+        <img src="./assets/test-two-poster.jpg" alt="30 秒坐站测试示范">
+        <div class="chair-copy">请坐在椅子前半部分，双脚平放地面，双手交叉放在胸前。准备好后点击“开始测试”，在 30 秒内尽可能多地完成坐下和站起。</div>
+        <button id="chairStartButton">开始测试</button>
+      </section>
       <div class="form-hotspots" id="formHotspots" hidden>
         <section class="form-card">
           <h2>性别 <small>（必填）</small></h2>
@@ -82,6 +89,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260731-5"></script>
+  <script src="./app.js?v=20260803-1"></script>
 </body>
 </html>

@@ -38,8 +38,6 @@ const screens = [
   { image: "评估生成中.png", autoNext: 2200 },
   { image: "综合评估结果.png", report: true }
 ];
-// The supplied screenshot set does not contain the 30-second chair-stand intro
-// yet, so tabs 2 and 3 temporarily share the nearest supplied aerobic intro.
 const testStarts = [6, 10, 10, 15, 19, 23, 27, 31];
 const testRanges = [
   [6, 10], [10, 10], [10, 15], [15, 19],
@@ -84,6 +82,7 @@ const speechHotspot = document.querySelector("#speechHotspot");
 const liveTime = document.querySelector("#liveTime");
 const dynamicTestPanel = document.querySelector("#dynamicTestPanel");
 const dynamicComplete = document.querySelector("#dynamicComplete");
+const chairTestView = document.querySelector("#chairTestView");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const primaryActionScreens = new Set([0, 1, 2, 3, 5, 6, 8, 9, 10, 15, 19, 21, 23, 25, 27, 28, 31, 32, 35]);
 
@@ -158,6 +157,9 @@ function renderScreen() {
   const screen = screens[index];
   renderTestTabs();
   formHotspots.hidden = index !== 4;
+  const chairMode = selectedTestTab === 1 && index >= 10 && index < 15;
+  chairTestView.hidden = !chairMode;
+  chairTestView.classList.toggle("background-only", chairMode && index !== 10);
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
   if (index === 3) {
     primaryActionHotspot.style.top = "53%";
@@ -191,6 +193,7 @@ function renderScreen() {
   history.replaceState(null, "", `#step=${index + 1}`);
 }
 function currentTestIndex() {
+  if (selectedTestTab === 1 && index >= 10 && index < 15) return 1;
   if (selectedTestTab !== null && testStarts[selectedTestTab] === index) return selectedTestTab;
   return testRanges.findIndex(([start, end], tabIndex) =>
     tabIndex !== 1 && index >= start && index < end
@@ -239,6 +242,12 @@ function next(fromAuto = false) {
     return;
   }
   if (screens[index].report) return showDetail();
+  if (selectedTestTab === 1 && index === 14) {
+    selectedTestTab = 2;
+    index = testStarts[2];
+    renderScreen();
+    return;
+  }
   if (index < screens.length - 1) { index += 1; renderScreen(); }
 }
 function back() {
@@ -273,6 +282,10 @@ document.querySelector("#nextButton").addEventListener("click", next);
 document.querySelector("#backButton").addEventListener("click", back);
 primaryActionHotspot.addEventListener("click", next);
 dynamicComplete.addEventListener("click", () => next(true));
+document.querySelector("#chairStartButton").addEventListener("click", () => {
+  index = 11;
+  renderScreen();
+});
 stage.addEventListener("click", event => {
   if (event.target !== image || !primaryActionScreens.has(index)) return;
   const bounds = stage.getBoundingClientRect();
