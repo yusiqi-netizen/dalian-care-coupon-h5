@@ -151,6 +151,13 @@ function playAudio(name) {
   narration.src = assetPath("audio", name);
   narration.play().catch(() => {});
 }
+function currentManualAudio() {
+  if (index === 10) {
+    if (selectedTestTab === 1) return "test-two-intro-speech.mp3";
+    if (selectedTestTab === 2) return "test-three-intro-speech.mp3";
+  }
+  return screens[index].manualAudio;
+}
 function playCountdown() {
   stopAudio();
   [5,4,3,2,1].forEach((number, i) => {
@@ -452,7 +459,7 @@ stage.addEventListener("click", event => {
   if (event.clientY - bounds.top > bounds.height * 0.56) next();
 });
 speechHotspot.addEventListener("click", () => {
-  const audio = screens[index].manualAudio;
+  const audio = currentManualAudio();
   if (!audio) return;
   if (!narration.paused) {
     stopAudio();
@@ -463,7 +470,7 @@ speechHotspot.addEventListener("click", () => {
   }
 });
 compactDemoCaptionButton.addEventListener("click", () => {
-  const audio = screens[index].manualAudio;
+  const audio = currentManualAudio();
   if (!audio) return;
   if (!narration.paused) {
     stopAudio();
