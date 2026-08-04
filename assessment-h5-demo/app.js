@@ -27,7 +27,7 @@ const screens = [
   { image: "计时走测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "计时走测试完成.png" },
   { image: "坐位体前屈测试.png", manualAudio: "test-seven-intro-speech.mp3", speechY: 420 },
-  { image: "坐位体前屈测试中.png", manualAudio: "test-seven-timer-speech.mp3", autoAudio: "test-seven-timer-speech.mp3", speechY: 420 },
+  { image: "坐位体前屈测试中.png", manualAudio: "test-seven-timer-speech-v2.mp3", autoAudio: "test-seven-timer-speech-v2.mp3", speechY: 420 },
   { image: "坐位体前屈测试结果选择.png" },
   { image: "坐位体前屈测试结果已记录.png", autoNext: 1600 },
   { image: "肩屈曲测试.png", manualAudio: "test-eight-intro-speech.mp3", speechY: 420 },
