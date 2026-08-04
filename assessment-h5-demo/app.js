@@ -103,6 +103,7 @@ const gripPrompt = document.querySelector("#gripPrompt");
 const timerTestPrompt = document.querySelector("#timerTestPrompt");
 const testVideoOverlay = document.querySelector("#testVideoOverlay");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
+const voiceResultCopy = document.querySelector("#voiceResultCopy");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
 const recordedOverlay = document.querySelector("#recordedOverlay");
@@ -255,6 +256,7 @@ function renderScreen() {
   testVideoOverlay.hidden = !([10, 11, 12].includes(index) && selectedTestTab !== 1);
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
+  voiceResultCopy.hidden = index !== 18;
   repsControl.hidden = index !== 14;
   repsValue.textContent = selectedTestTab === 1 ? chairRepetitions : stepRepetitions;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
