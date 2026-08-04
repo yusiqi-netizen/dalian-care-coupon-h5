@@ -256,7 +256,7 @@ function renderScreen() {
   testVideoOverlay.hidden = !([10, 11, 12].includes(index) && selectedTestTab !== 1);
   compactDemoCaption.hidden = !compactDemoScreens.has(index);
   loadingRingOverlay.hidden = index !== 36;
-  voiceResultCopy.hidden = index !== 18;
+  voiceResultCopy.hidden = true;
   repsControl.hidden = index !== 14;
   repsValue.textContent = selectedTestTab === 1 ? chairRepetitions : stepRepetitions;
   primaryActionHotspot.hidden = !primaryActionScreens.has(index);
