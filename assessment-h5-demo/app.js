@@ -263,7 +263,7 @@ function renderScreen() {
   stage.classList.toggle("report-mode", Boolean(screen.report));
   stage.classList.toggle("chair-timer-active", index === 12 && selectedTestTab === 1);
   if (index === 3) {
-    primaryActionHotspot.style.top = "53%";
+    primaryActionHotspot.style.top = "65%";
     primaryActionHotspot.style.bottom = "auto";
   } else {
     primaryActionHotspot.style.top = "auto";
@@ -420,6 +420,13 @@ function back() {
   clearFlowTimers();
   if (index > 0) { index -= 1; renderScreen(); }
 }
+function goHome() {
+  clearFlowTimers();
+  stopAudio();
+  selectTestTab(null);
+  index = 0;
+  renderScreen();
+}
 function metricHtml(item) {
   const [name,score,level,tone] = item;
   return `<div class="ability-row-detail"><span class="ability-name">${name}</span><span class="ability-track"><i></i><i></i><i></i><i></i><em class="ability-marker ${tone}" style="left:${score}%"><b></b></em></span><span class="ability-score ${tone}">${score}分</span><span class="ability-level ${tone}">${level}</span></div>`;
@@ -444,7 +451,10 @@ function toast(message) {
 }
 
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
-nextButton.addEventListener("click", next);
+nextButton.addEventListener("click", () => {
+  if (index === 2) goHome();
+  else next();
+});
 document.querySelector("#backButton").addEventListener("click", back);
 primaryActionHotspot.addEventListener("click", next);
 reportDetailHotspot.addEventListener("click", showDetail);
@@ -459,6 +469,7 @@ stage.addEventListener("click", event => {
   if (event.clientY - bounds.top > bounds.height * 0.56) next();
 });
 speechHotspot.addEventListener("click", () => {
+  if (index === 3) return;
   const audio = currentManualAudio();
   if (!audio) return;
   if (!narration.paused) {
