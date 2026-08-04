@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260803-26">
+  <link rel="stylesheet" href="./style.css?v=20260804-27">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -93,6 +93,12 @@
         <div class="dynamic-time-units"><span>分钟</span><span>秒</span></div>
         <button class="dynamic-complete" id="dynamicComplete">完成测试</button>
       </section>
+      <section class="recorded-overlay" id="recordedOverlay" role="status" aria-live="assertive" hidden>
+        <div class="recorded-dialog">
+          <div class="recorded-check" aria-hidden="true">✓</div>
+          <strong>已记录</strong>
+        </div>
+      </section>
       <div class="demo-toolbar">
         <button id="voiceButton" aria-label="切换语音">语音开</button>
         <span id="progressText"></span>
@@ -110,6 +116,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260803-26"></script>
+  <script src="./app.js?v=20260804-27"></script>
 </body>
 </html>
