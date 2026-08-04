@@ -497,18 +497,15 @@ repsControl.addEventListener("click", event => {
     return;
   }
   if (event.target.closest("[data-reps-submit]")) {
-    if (selectedTestTab !== 1) {
-      next();
-      return;
-    }
     clearFlowTimers();
     stopAudio();
     stage.scrollTop = 0;
     recordedOverlay.hidden = false;
     flowTimer = setTimeout(() => {
       recordedOverlay.hidden = true;
-      selectTestTab(2);
-      index = testStarts[2];
+      const nextTab = selectedTestTab === 1 ? 2 : 3;
+      selectTestTab(nextTab);
+      index = testStarts[nextTab];
       renderScreen();
     }, 2000);
   }
