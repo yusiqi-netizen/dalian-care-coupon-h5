@@ -469,7 +469,6 @@ stage.addEventListener("click", event => {
   if (event.clientY - bounds.top > bounds.height * 0.56) next();
 });
 speechHotspot.addEventListener("click", () => {
-  if (index === 3 || index === 5) return;
   const audio = currentManualAudio();
   if (!audio) return;
   if (!narration.paused) {
