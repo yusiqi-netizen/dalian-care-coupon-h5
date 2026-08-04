@@ -461,7 +461,7 @@ function toast(message) {
 
 document.querySelector("#startButton").addEventListener("click", () => { welcomeMask.hidden = true; renderScreen(); });
 nextButton.addEventListener("click", () => {
-  if (index === 2) goHome();
+  if (index === 1) goHome();
   else next();
 });
 document.querySelector("#backButton").addEventListener("click", back);
