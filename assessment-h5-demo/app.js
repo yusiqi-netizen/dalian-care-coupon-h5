@@ -98,6 +98,7 @@ const dynamicComplete = document.querySelector("#dynamicComplete");
 const chairTestView = document.querySelector("#chairTestView");
 const resultChoiceView = document.querySelector("#resultChoiceView");
 const compactDemoCaption = document.querySelector("#compactDemoCaption");
+const compactDemoCaptionButton = compactDemoCaption.querySelector(".caption-image-button");
 const gripPrompt = document.querySelector("#gripPrompt");
 const timerTestPrompt = document.querySelector("#timerTestPrompt");
 const testVideoOverlay = document.querySelector("#testVideoOverlay");
@@ -459,6 +460,17 @@ speechHotspot.addEventListener("click", () => {
   } else {
     playAudio(audio);
     showFlowStatus("正在朗读，再点一次暂停");
+  }
+});
+compactDemoCaptionButton.addEventListener("click", () => {
+  const audio = screens[index].manualAudio;
+  if (!audio) return;
+  if (!narration.paused) {
+    stopAudio();
+    showFlowStatus("朗读已暂停");
+  } else {
+    playAudio(audio);
+    showFlowStatus("正在播放语音讲解");
   }
 });
 image.addEventListener("click", () => {
