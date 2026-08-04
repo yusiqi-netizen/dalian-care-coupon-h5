@@ -47,3 +47,21 @@ H5 页面已按小程序 `rpx` 相对 750 设计宽度同比换算。顶部导�
 - 报告滚动及底部固定操作区
 
 final result: passed
+
+---
+
+# 第二项测试倒计时与记录反馈 Design QA（2026-08-04）
+
+- Source visual truth: `/var/folders/zp/c01r2869591dkw_dy11dmfk40000gn/T/codex-clipboard-908b72c8-109e-4e44-91f5-d5c18b5516d3.png`、`/Users/yusiqi/Documents/东软睿新/各页面/站坐测试完成.png`
+- Authoritative interaction truth: `miniprogram/pages/guide/index.wxml` 的 `currentStep == 12/14` 与 `miniprogram/pages/guide/index.js` 的 `startTestTwoCountdown()`、`submitTestTwo()`
+- Browser verification viewport: phone shell 393 px 宽；第二项完整交互状态
+
+## Visual and interaction checks
+
+- 开始测试后进入 `#step=12`，全屏黑色 54% 透明罩层覆盖第二项示例页。
+- 196 × 196 px 绿色圆形倒计时器位于罩层上方，页面原有视频与按钮均保持在遮罩下。
+- 次数选择页点击“提交”后不再立即跳转；先显示白色圆角“已记录”弹窗及绿色对勾，背景为黑色 54% 透明罩层。
+- 弹窗保持 2 秒后关闭，随后进入第三项测试；浏览器实测 active tab 从 2 切换为 3。
+- 控制台脚本语法检查通过，交互验证无阻断错误。
+
+final result: passed

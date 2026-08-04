@@ -104,6 +104,7 @@ const testVideoOverlay = document.querySelector("#testVideoOverlay");
 const loadingRingOverlay = document.querySelector("#loadingRingOverlay");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
+const recordedOverlay = document.querySelector("#recordedOverlay");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const reportDetailHotspot = document.querySelector("#reportDetailHotspot");
 const nextButton = document.querySelector("#nextButton");
@@ -134,6 +135,7 @@ function clearFlowTimers() {
   flowStatus.classList.remove("show");
   flowStatus.textContent = "";
   dynamicTestPanel.hidden = true;
+  recordedOverlay.hidden = true;
   narration.onended = null;
 }
 function stopAudio() { narration.pause(); narration.currentTime = 0; }
@@ -277,6 +279,7 @@ function renderScreen() {
   image.src = assetPath("screens", displayImage);
   progressText.textContent = `${index + 1}/${screens.length}`;
   if (screen.countdown) {
+    stage.scrollTop = 0;
     dynamicTestPanel.hidden = false;
     dynamicTestPanel.classList.add("countdown");
     dynamicTestPanel.classList.remove("precise-timer");
@@ -493,7 +496,22 @@ repsControl.addEventListener("click", event => {
     }
     return;
   }
-  if (event.target.closest("[data-reps-submit]")) next();
+  if (event.target.closest("[data-reps-submit]")) {
+    if (selectedTestTab !== 1) {
+      next();
+      return;
+    }
+    clearFlowTimers();
+    stopAudio();
+    stage.scrollTop = 0;
+    recordedOverlay.hidden = false;
+    flowTimer = setTimeout(() => {
+      recordedOverlay.hidden = true;
+      selectTestTab(2);
+      index = testStarts[2];
+      renderScreen();
+    }, 2000);
+  }
 });
 formHotspots.addEventListener("click", event => {
   const control = event.target.closest("[data-form]");
