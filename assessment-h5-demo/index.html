@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260804-40">
+  <link rel="stylesheet" href="./style.css?v=20260804-41">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -42,6 +42,7 @@
         <button type="button" class="reps-submit" data-reps-submit aria-label="提交踏步次数"></button>
       </section>
       <div class="loading-ring-overlay" id="loadingRingOverlay" hidden><span>生成中</span></div>
+      <div class="voice-result-copy" id="voiceResultCopy" hidden>您本次发声时间为: 1 分 26 秒。</div>
       <div class="form-hotspots" id="formHotspots" hidden>
         <section class="form-card">
           <h2>性别 <small>（必填）</small></h2>
@@ -116,6 +117,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260804-40"></script>
+  <script src="./app.js?v=20260804-41"></script>
 </body>
 </html>
