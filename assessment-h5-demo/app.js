@@ -107,6 +107,7 @@ const voiceResultCopy = document.querySelector("#voiceResultCopy");
 const repsControl = document.querySelector("#repsControl");
 const repsValue = document.querySelector("#repsValue");
 const recordedOverlay = document.querySelector("#recordedOverlay");
+const reportReturnOverlay = document.querySelector("#reportReturnOverlay");
 const primaryActionHotspot = document.querySelector("#primaryActionHotspot");
 const reportDetailHotspot = document.querySelector("#reportDetailHotspot");
 const nextButton = document.querySelector("#nextButton");
@@ -138,6 +139,7 @@ function clearFlowTimers() {
   flowStatus.textContent = "";
   dynamicTestPanel.hidden = true;
   recordedOverlay.hidden = true;
+  reportReturnOverlay.hidden = true;
   narration.onended = null;
 }
 function stopAudio() { narration.pause(); narration.currentTime = 0; }
@@ -426,6 +428,10 @@ function next(fromAuto = false) {
   if (index < screens.length - 1) { index += 1; renderScreen(); }
 }
 function back() {
+  if (screens[index].report) {
+    reportReturnOverlay.hidden = false;
+    return;
+  }
   clearFlowTimers();
   if (index > 0) { index -= 1; renderScreen(); }
 }
@@ -465,6 +471,14 @@ nextButton.addEventListener("click", () => {
   else next();
 });
 document.querySelector("#backButton").addEventListener("click", back);
+reportReturnOverlay.addEventListener("click", event => {
+  const action = event.target.closest("[data-report-return]")?.dataset.reportReturn;
+  if (action === "no") reportReturnOverlay.hidden = true;
+  if (action === "yes") {
+    reportReturnOverlay.hidden = true;
+    goHome();
+  }
+});
 primaryActionHotspot.addEventListener("click", next);
 reportDetailHotspot.addEventListener("click", showDetail);
 dynamicComplete.addEventListener("click", () => next(true));

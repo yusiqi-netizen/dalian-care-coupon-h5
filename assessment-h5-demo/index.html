@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
   <meta name="theme-color" content="#f3f9f6">
   <title>老年人体适能测评</title>
-  <link rel="stylesheet" href="./style.css?v=20260804-41">
+  <link rel="stylesheet" href="./style.css?v=20260804-42">
 </head>
 <body>
   <main class="phone-shell" id="app">
@@ -100,6 +100,15 @@
           <strong>已记录</strong>
         </div>
       </section>
+      <section class="report-return-overlay" id="reportReturnOverlay" role="dialog" aria-modal="true" aria-labelledby="reportReturnTitle" hidden>
+        <div class="report-return-dialog">
+          <h2 id="reportReturnTitle">返回首页</h2>
+          <div class="report-return-actions">
+            <button type="button" data-report-return="yes">是</button>
+            <button type="button" class="report-return-no" data-report-return="no">否</button>
+          </div>
+        </div>
+      </section>
       <div class="demo-toolbar">
         <button id="voiceButton" aria-label="切换语音">语音开</button>
         <span id="progressText"></span>
@@ -117,6 +126,6 @@
     </div>
     <audio id="narration" preload="auto"></audio>
   </main>
-  <script src="./app.js?v=20260804-44"></script>
+  <script src="./app.js?v=20260804-45"></script>
 </body>
 </html>
