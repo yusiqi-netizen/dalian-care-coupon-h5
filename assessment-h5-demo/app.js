@@ -22,7 +22,7 @@ const screens = [
   { image: "单腿站立测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
   { image: "单腿站立测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "单腿站立测试完成.png" },
-  { image: "计时走测试.png" },
+  { image: "计时走测试.png", manualAudio: "test-six-intro-speech.mp3", speechY: 420 },
   { image: "计时走测试前倒计时 5 秒.png", countdown: true, autoNext: 5000 },
   { image: "计时走测试中.png", timer: "up", autoAudio: "test-start-speech.mp3" },
   { image: "计时走测试完成.png" },
