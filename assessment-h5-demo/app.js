@@ -1,10 +1,10 @@
 const screens = [
   { image: "介绍页.png" },
-  { image: "注意事项.png", manualAudio: "notice-speech.mp3", speechY: 150 },
-  { image: "准备物品.png", manualAudio: "goods-speech.mp3", speechY: 150 },
-  { image: "填写预告.png", manualAudio: "preface-speech.mp3", speechY: 440 },
+  { image: "注意事项.png", manualAudio: "notice-speech.mp3", speechX: 120, speechY: 160, speechWidth: 160 },
+  { image: "准备物品.png", manualAudio: "goods-speech.mp3", speechX: 120, speechY: 160, speechWidth: 160 },
+  { image: "填写预告.png", manualAudio: "preface-speech.mp3", speechX: 240, speechY: 435, speechWidth: 145 },
   { image: "填写信息.png" },
-  { image: "信息录入-开始前.png", manualAudio: "ready-speech.mp3", speechY: 545 },
+  { image: "信息录入-开始前.png", manualAudio: "ready-speech.mp3", speechX: 240, speechY: 545, speechWidth: 145 },
   { image: "握力测试 1.png", manualAudio: "grip-speech.mp3", speechY: 420 },
   { image: "开始前倒计时.png", countdown: true, autoNext: 5000 },
   { image: "计时中.png", timer: "up" },
@@ -270,7 +270,11 @@ function renderScreen() {
     primaryActionHotspot.style.bottom = "104px";
   }
   speechHotspot.hidden = !screen.manualAudio || compactDemoScreens.has(index);
-  if (screen.manualAudio) speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
+  if (screen.manualAudio) {
+    speechHotspot.style.setProperty("--speech-x", `${screen.speechX ?? 7}px`);
+    speechHotspot.style.setProperty("--speech-y", `${screen.speechY || 420}px`);
+    speechHotspot.style.setProperty("--speech-width", `${screen.speechWidth || 72}px`);
+  }
   image.classList.add("is-loading");
   const backgroundIndex = screen.countdown ? index - 1 : index;
   let displayImage = screen.countdown ? screens[index - 1].image : screen.image;
