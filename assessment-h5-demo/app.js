@@ -264,7 +264,10 @@ function renderScreen() {
   nextButton.hidden = Boolean(screen.report);
   stage.classList.toggle("report-mode", Boolean(screen.report));
   stage.classList.toggle("chair-timer-active", index === 12 && selectedTestTab === 1);
-  if (index === 3) {
+  if (index === 2) {
+    primaryActionHotspot.style.top = "630px";
+    primaryActionHotspot.style.bottom = "auto";
+  } else if (index === 3) {
     primaryActionHotspot.style.top = "65%";
     primaryActionHotspot.style.bottom = "auto";
   } else {
